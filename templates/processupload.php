@@ -94,7 +94,7 @@ if (isset($_POST)) {
           We have succesfully resized and created thumbnail image
           We can now output image to user's browser or store information in the database
          */
-        $domain = preg_replace('|/$|', '', $content->getDomain());
+        $domain = preg_replace('|/$|', '', $content->getTngUrl());
         $thumbPath = '/' . $uploadPath . '/' . basename($thumb_DestRandImageName);
         $thumbPath = str_replace('\\', '/', $thumbPath);
         $thumbPath = $domain . str_replace('//', '/', $thumbPath);
