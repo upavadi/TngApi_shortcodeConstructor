@@ -1,0 +1,74 @@
+.container {
+/**
+margin: 0 auto;
+width: 100%;
+**/
+padding: 0px !important;
+  } 
+/**
+Tables
+**/
+.table {
+border: 1px  solid #ffff !important;
+}
+
+.tdback {
+    border: 1px solid #727171 !important;
+    padding: 8px 10px;
+    line-height: 15px;
+    background-color: #CACACA;
+    color: #005689;
+    font-size: large;
+    text-align: center;
+    position: static; /** added to show borders in firefox **/
+        
+    }
+
+    .tdfront {
+        padding: 8px 10px;
+        line-height: 15px;
+        width: auto;
+        text-align: center;
+        /**background-color: #FFFFFF; **/
+        border-bottom: 1px solid #bbbbbb;
+        border-right: 1px solid #bbbbbb;
+        /***font-size:10px; **/
+       
+    }
+  
+    /** Submit Image ****/
+    #upload-wrapper {
+      width: auto;
+    margin-right: auto;
+      margin-left: auto;
+     background: #F5F5F5;
+     padding: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      color:#666666;
+      font-size: 14px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 3px #AAA;
+    clear: both;
+  }
+
+  #upload-wrapper {
+    width: auto;
+	margin-right: auto;
+    margin-left: auto;
+   background: #F5F5F5;
+   padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#666666;
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px #AAA;
+	clear: both;
+}
+
+#submit-btn {
+  font-size: 1.2em;
+  text-align: center;
+  display: inline-block;
+  margin:10px;
+  width: 150px;
+}
