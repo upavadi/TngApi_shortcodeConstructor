@@ -120,6 +120,13 @@ class TngWp_ShortcodeContent
             } 
     
     }
+
+    /** Require Login */
+    function requireLogin() {
+        $configPath = $this->getConfigPath();
+        include $configPath;
+        return $requirelogin;
+    }
     
     public function getTngTables()
     {
@@ -297,27 +304,27 @@ class TngWp_ShortcodeContent
         private,
         famc,
         gedcom
-    FROM   {$this->tables['people_table']}
+        FROM   {$this->tables['people_table']}
     WHERE  Month(birthdatetr) = {$month}
-        AND living = 1 {$treeWhere}
-    ORDER  BY Day(birthdatetr),
-            lastname
-    SQL;
-            $result = $this->query($sql);
+           AND living = 1 {$treeWhere}
+    ORDER BY Day(birthdatetr), lastname
+SQL;
+    $result = $this->query($sql);
 
-            $rows = array();
-            while ($row = $result->fetch_assoc()) {
-                $userPrivate = $user['allow_private'];
-                $birthdayPrivate = $row['private'];
-                if ($birthdayPrivate > $userPrivate) {
-                    $row['firstname'] = 'Private:';
-                    $row['lastname'] = ' Details withheld';
+        $rows = array();
+        while ($row = $result->fetch_assoc()) {
+            $userPrivate = $user['allow_private'];
+			$birthdayPrivate = $row['private'];
+			if ($birthdayPrivate > $userPrivate) {
+				$row['firstname'] = 'Private:';
+				$row['lastname'] = ' Details withheld';
 
-                }
-                $rows[] = $row;
-            }
-        return $rows;
+			}
+			$rows[] = $row;
+        }
+		return $rows;
     }
+    
     public function getFamily($personId = null, $tree = null)
     {
 
@@ -447,16 +454,6 @@ public function getDefaultMedia($personId = null, $tree = null)
         $user = $this->getTngUser();
         $userPrivate = $user['allow_private'];
         $gedcom = $user['gedcom'];
-        // // If we are searching, enter $tree value
-        // if ($tree) {
-        //     $gedcom = $tree;
-        // }
-        // $person = $this->getPerson($personId, $gedcom);
-        // $personPrivate = $person['private'];
-
-        // if ($personPrivate > $userPrivate) {
-        //     return array();
-        // }
         $treeWhere = null;
         if ($gedcom) {
             $treeWhere = ' AND m.gedcom = "' . $gedcom . '"';
@@ -614,5 +611,5 @@ public function guessVersion()
 
     return $version;
 }
+ 
 } //End class
-?>  

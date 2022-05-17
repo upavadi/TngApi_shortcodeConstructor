@@ -76,7 +76,8 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 	<?php
 	//get and hold current user
 	$tngcontent = TngWp_ShortcodeContent::instance()->init();
-	$user = $tngcontent->getTngUser();
+	$user = $tngcontent->getTngUser(); 
+	$login = $tngcontent->init(); Var_dump($login);
 	$usertree = $user['gedcom'];
 	?>
 <div class="container-fluid table-responsive">
@@ -130,7 +131,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 		$defaultmedia = $tngcontent->getDefaultMedia($personId, $tree); 
 		$photosPath = $url. $photos;
 		$mediaID = $photosPath."/". $defaultmedia['thumbpath'];
-		$birthdate = $danniversary['birthdate'];
+		$birthdate = $danniversary['birthdate']; 
 	?>
 		<tr class="row">
 			<td class="col-md-3 tdfront" style="text-align: center">
