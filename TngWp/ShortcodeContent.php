@@ -1,5 +1,4 @@
 <?php
-//https://www.php.net/manual/en/language.oop5.autoload.php
 class TngWp_ShortcodeContent
 {
 
