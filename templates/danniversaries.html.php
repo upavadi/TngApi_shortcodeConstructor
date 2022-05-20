@@ -77,8 +77,10 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 	//get and hold current user
 	$tngcontent = TngWp_ShortcodeContent::instance()->init();
 	$user = $tngcontent->getTngUser(); 
-	$login = $tngcontent->init(); Var_dump($login);
+	$login = $tngcontent->init();
 	$usertree = $user['gedcom'];
+	
+	/** set Tree Access */
 	?>
 <div class="container-fluid table-responsive">
 <div class="col-md-12">
@@ -101,6 +103,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 			
 <tbody>
 	<?php 
+	
 	foreach ($danniversaries as $danniversary): 
 		$danniversarydate = strtotime($danniversary['deathdate']);
 		$Years = $year - date('Y', $danniversarydate);
