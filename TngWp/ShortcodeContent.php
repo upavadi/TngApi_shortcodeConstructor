@@ -127,6 +127,13 @@ class TngWp_ShortcodeContent
         include $configPath;
         return $requirelogin;
     }
+
+    /** Restrict Access to tree ****/
+    function treeAccess() {
+        $configPath = $this->getConfigPath();
+        include $configPath;
+        return $treerestrict;
+    }
     
     public function getTngTables()
     {
@@ -185,7 +192,7 @@ class TngWp_ShortcodeContent
     public function getTngPath()
     {
         $rootPath = esc_attr(get_option('tng-api-tng-path'));
-        if (!file_exists($path)) {
+        if (!file_exists($rootPath)) {
             add_action( 'admin_notices', array($this, 'pathNotSpecified'));
         }
         return $rootPath;
