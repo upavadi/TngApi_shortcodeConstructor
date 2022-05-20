@@ -1,15 +1,27 @@
 <?php
-
+/** Requires LogIn ****/
 class TngWp_Shortcode_SubmitImage extends TngWp_Shortcode_AbstractShortcode
 {
     const SHORTCODE = 'TngWp_submitImage';
 
-    //do shortcode Add Family form
-    public function show()
-    {
-        $personId = filter_input(INPUT_GET, 'personId', FILTER_SANITIZE_SPECIAL_CHARS);
-        $context = array();
-        $context['personId'] = $personId;
+     public function show()
+     {
+        $this->content->init();
+        $requireLogin = $this->content->requireLogin(); //in setup
+        $treeAccess = $this->content->treeAccess(); //in setup
+        $tngUser = $this->content->getTngUser();
+        $context = array(
+            'requireLogin' => $requireLogin,
+            'treeAccess' => $treeAccess
+            
+        );
+
+if ($requireLogin == 1 && (!ISSET($tngUser))) {
+            /** if not logged in display error ** */
+            echo "<div style='color: red; font-size: 1.2em; text-align: center;'>You are not Logged In. Please Login to continue</div>";
+        } else {
         return $this->templates->render('submit_images.html', $context);
+        }
     }
+
 }
