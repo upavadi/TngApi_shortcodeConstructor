@@ -129,12 +129,13 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 		$ageAtDeath = $i->format("%Y");
 		}	else { 	$ageAtDeath = "";
 		}	
-		$photos = $tngcontent->getTngPhotoFolder(); 
+		//$photos = $tngcontent->getTngPhotoFolder(); 
 		$personId = $danniversary['personid'];
 		$defaultmedia = $tngcontent->getDefaultMedia($personId, $tree); 
 		$photosPath = $url. $photos;
 		$mediaID = $photosPath."/". $defaultmedia['thumbpath'];
 		$birthdate = $danniversary['birthdate']; 
+		$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
 	?>
 		<tr class="row">
 			<td class="col-md-3 tdfront" style="text-align: center">
@@ -142,7 +143,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 			<?php if ($defaultmedia['thumbpath']) { ?>
 			<img src="<?php 
 			echo "$mediaID";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
-			<br /><a href="/family/?personId=<?php echo $danniversary['personid']; ?>&amp;tree=<?php echo $tree; ?>">
+			<br /><a href="<?php echo $personUrl; ?>">
 			<?php echo $danniversary['firstname']. " "; echo $danniversary['lastname']; ?></a></div></td>
 			<td class="col-md-2 tdfront"><?php echo $danniversary['deathdate']; ?></td>
 			<td class="col-md-2 tdfront"><?php echo $danniversary['deathplace']; ?></td>
