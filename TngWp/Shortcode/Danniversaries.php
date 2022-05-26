@@ -1,5 +1,5 @@
 <?php
-/** Requires LogIn  Requires Tree Access update****/
+/** Requires LogIn in Setup  Requires Tree Access update****/
 class TngWp_Shortcode_Danniversaries extends TngWp_Shortcode_AbstractShortcode
 {
     const SHORTCODE = 'TngWp_danniversaries';
@@ -23,6 +23,8 @@ class TngWp_Shortcode_Danniversaries extends TngWp_Shortcode_AbstractShortcode
         $tngUser = $this->content->getTngUser();
         $userTree = $tngUser['mygedcom']; 
         $userRestrictTree = $tngUser['gedcom']; 
+        $photos = $this->content->getTngPhotoFolder();
+        $defaultmedia = $this->content->getDefaultMedia($personId, $tree); 
         $danniversaries = $this->content->getDeathAnniversaries($month);
         $date = new DateTime();
         $date->setDate($year, $month, 01);
@@ -34,6 +36,7 @@ class TngWp_Shortcode_Danniversaries extends TngWp_Shortcode_AbstractShortcode
             'requireLogin' => $requireLogin,
             'treeAccess' => $treeAccess,
 			'danniversaries' => $danniversaries,
+            'photos' =>$photos,
             'userTree' =>$userTree
         );
         if ($requireLogin == 1 && (!ISSET($tngUser))) {
