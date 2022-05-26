@@ -572,7 +572,7 @@ SQL;
     }
     return $rows;
 }
-
+/***
 public function guessVersion()
 {
     $sql = 'describe ' . $this->tables['people_table'];
@@ -618,5 +618,5 @@ public function guessVersion()
 
     return $version;
 }
- 
+**/ 
 } //End class
