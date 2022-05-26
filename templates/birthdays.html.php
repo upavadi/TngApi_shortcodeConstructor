@@ -81,6 +81,7 @@ $allowAdmin = $user['allow_private'];
 $usertree = $user['gedcom'];
 $tngFolder = $tngcontent->getTngIntegrationPath();
 ?>
+
 <div class="container-fluid table-responsive">
 <div class="col-md-12">
 <table class="table table-bordered">   
@@ -91,7 +92,8 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
     <td class="tdback col-md-1">Age</td>
 	<td class="tdback col-md-1">Relationship</td>
     <?php 
-	$url = $tngcontent->getTngUrl();	
+	$url = $tngcontent->getTngUrl();
+		
 	if ($usertree == '') { ?>
 	<td class="tdback col-md-1" style="text-align: center">Tree</td>
 			
@@ -113,7 +115,8 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
 	//get default media
 	$photos = $tngcontent->getTngPhotoFolder();
 	$personId = $birthday['personid'];
-	//var_dump($personId);
+	$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
+	
 	$defaultmedia = $tngcontent->getDefaultMedia($personId, $tree);
 	 
 	$photosPath = $url. $photos;
@@ -131,6 +134,15 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
 		$birthday['age'] = "";
 		$view = false;
 	}
+
+	if (!$tngAllowLiving) {
+		$firstname = 'Living:';
+		$lastname = ' Details withheld';
+		$birthday['birthdate'] = "?";
+		$mediaID = "";
+		$birthday['age'] = "";
+		$view = false;
+	}
 	?>
 	<tbody>
 	   <tr class="row">
@@ -138,18 +150,18 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
 			<?php if (isset($defaultmedia['thumbpath'])) { ?>
 			<img src="<?php 
 			echo "$mediaID";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?><br /> 
-			<a href="/family/?personId=<?php echo $birthday['personid'];?>&amp;tree=<?php echo $tree; ?>">
+			<a href="<?php echo $personUrl; ?>">
                     <?php echo $firstname . " "; ?><?php echo $lastname; ?></a></td>
             <td class="col-md-2 tdfront" style="text-align: center"><?php echo $birthday['birthdate']; ?></td>
             <td class="col-md-2 tdfront" style="text-align: center"><?php echo $birthday['birthplace']; ?></td>
             <td class="col-md-1 tdfront" style="text-align: center"><?php echo $birthday['age']; ?></td>
 			<?php if($view) 
 					?>
-			<td class="col-md-1 tdfront" style="text-align: center";><a href="../<?php echo $tngFolder; ?>/relationship.php?altprimarypersonID=&savedpersonID=&secondpersonID=<?php echo $birthday['personid'];?>&maxrels=2&disallowspouses=0&generations=15&tree=upavadi_1&primarypersonID=<?php echo $currentperson; ?>"><?php echo $view?></td>
+			<td class="col-md-1 tdfront" style="text-align: center";><a href="../?php echo $tngFolder; ?>/relationship.php?altprimarypersonID=&savedpersonID=&secondpersonID=<?php echo $birthday['personid'];?>&maxrels=2&disallowspouses=0&generations=15&tree=upavadi_1&primarypersonID=<?php echo $currentperson; ?>"><?php echo $view?></td>
 			<?php
 			
 			if ($usertree == '') { ?>
-				<td class="col-md-1 tdfront" style="text-align: center">><?php echo $birthday['gedcom']; ?></td>
+				<td class="col-md-1 tdfront" style="text-align: center"><?php echo $birthday['gedcom']; ?></td>
 		</tr>
     <?php 
 	}
