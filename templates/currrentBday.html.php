@@ -13,10 +13,10 @@
         $personId = $birthday['personid'];
         $parentId = $birthday['famc'];
         $tree = $birthday['gedcom'];
-    	$families = $tngcontent->getFamilyUser($personId, $tree, null);
+    	$families = $tngcontent->getFamily($personId, $tree, null);
         $parents = $tngcontent->getFamilyById($parentId, $tree = null); 
         $personPrivacy = $birthday['private'];
-        $familyPrivacy = $families[0]['private'];
+        $familyPrivacy = $families['private'];
         $parentPrivacy = $parents['private'];
 
 	if ($personPrivacy || $familyPrivacy || $parentPrivacy) {

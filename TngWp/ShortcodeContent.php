@@ -535,6 +535,9 @@ SQL;
     {
         //get default media
         $defaultmedia = $this->getdefaultmedia($personId);
+        $photos = $this->getTngPhotoFolder();
+        $url = $this->getTngUrl();
+        $photosPath = $url. $photos;
         //$mediaID = "../tng/photos/". $defaultmedia['thumbpath'];
 
         if ($defaultmedia['thumbpath'] == null AND $person['sex'] == "M") {
