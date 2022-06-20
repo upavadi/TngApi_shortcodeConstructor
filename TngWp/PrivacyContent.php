@@ -22,7 +22,7 @@ Tng Path = esc_attr(get_option('tng-api-tng-path'))
 */
 class TngWp_PrivacyContent
 {
-    private static $instance2 = null;
+    private static $instance = null;
 protected $shortcodes = array();
 protected $domain;
 private $tngUser;
@@ -32,13 +32,13 @@ protected function __construct()
 
 }
 
-public static function instance2()
+public static function instance()
 {
-    if (!self::$instance2 instanceof self) {
-        self::$instance2 = new self;
+    if (!self::$instance instanceof self) {
+        self::$instance = new self;
     }
 
-    return self::$instance2;
+    return self::$instance;
 }
 
 

@@ -2,13 +2,19 @@
 
 class TngWp_Shortcode_MyShortcode extends TngWp_Shortcode_AbstractShortcode
 {
-    const SHORTCODE = 'TngWp_Shortcode_MyShortcode';
+    const SHORTCODE = 'TngWp_MyShortcode';
     
     public function show()
     {
-        //$personId = $this->content->getCurrentPersonId();
+      $this->content->init();  
+      $personId = $this->content->getCurrentPersonId();
+        //$currentPerson = $this->content->getCurrentPersonId();
+        var_dump($personId);
         $context = array();
-      //  $context['name'] = $this->custom->getPersonName($personId);
+       $context['name'] = $this->content->getPersonName($personId);
+        $content2 = TngWp_PrivacyContent::instance();
+        $context['x'] = $content2->gethim();
         return $this->templates->render('myshortcode.html', $context);
     }
+
 }

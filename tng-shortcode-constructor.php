@@ -65,12 +65,12 @@ var_dump($rootPath);
 if (file_exists($tngPath)) {
 
 	$content = TngWp_ShortcodeContent::instance();
-	//$content2 = TngWp_PrivacyContent::instance2();
 	$content->addShortcode(new TngWp_Shortcode_MyShortcode());
 	$content->addShortcode(new TngWp_Shortcode_SubmitImage());
 	$content->addShortcode(new TngWp_Shortcode_Birthdays());
 	$content->addShortcode(new TngWp_Shortcode_Danniversaries());
 	$content->addShortcode(new TngWp_Shortcode_Manniversaries());
+	$content->addShortcode(new TngWp_Shortcode_LandingPage());
 	//var_dump(get_declared_classes());
 
 

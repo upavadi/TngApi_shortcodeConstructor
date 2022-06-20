@@ -8,7 +8,7 @@ class TngWp_ShortcodeContent
     protected $tables = array();
     protected $sortBy = null;
     protected $tree;
-    //protected $custom;
+    protected $TngWp;
   
 
     /**
@@ -287,7 +287,14 @@ class TngWp_ShortcodeContent
         return $this->currentPerson;
     }
 
-   
+    public function getPersonName($personId)
+    {
+        $person = $this->getPerson($personId);
+        $name = $person['firstname'] . $person['lastname'];
+
+        return $name;
+    }
+    
     /*** Birthdays ******/   
     public function getBirthdays($month, $tree = null)
     {
@@ -366,6 +373,52 @@ SQL;
         }
         return $row;
     }
+
+    public function getFamilyUser($personId = null, $tree = null, $sortBy = null)    {
+
+        if (!$personId) {
+            $personId = $this->currentPerson;
+        }
+        $user = $this->getTngUser();
+        $gedcom = $user['gedcom'];
+        // If we are searching, enter $tree value
+        if ($tree) {
+            $gedcom = $tree;
+        }
+        $treeWhere = null;
+        if ($gedcom) {
+            $treeWhere = ' AND gedcom = "' . $gedcom . '"';
+        }
+
+        $sql = <<<SQL
+SELECT*
+
+
+FROM {$this->tables['families_table']}
+
+WHERE (husband = '{$personId}' {$treeWhere}) or (wife = '{$personId}' {$treeWhere})
+SQL;
+        $result = $this->query($sql);
+        $rows = array();
+
+        while ($row = $result->fetch_assoc()) {
+			$userPrivate = $user['allow_private'];
+			$familyPrivate = $row['private'];
+			if ($familyPrivate > $userPrivate) {
+				$row['marrdate'] = 'Private';
+				$row['marrplace'] = ' Private';
+			}
+
+			if ($sortBy) {
+				$this->sortBy = $sortBy;
+				usort($rows, array($this, 'sortRows'));
+			}
+			$rows[] = $row;
+		}
+		return $rows;
+    }
+
+    
     public function getPerson($personId = null, $tree = null)
     {
         if (!$personId) {
@@ -452,6 +505,7 @@ SQL;
         return $row;
     }
 
+    /**** Media ********** */
 public function getDefaultMedia($personId = null, $tree = null)
     {
 
@@ -475,6 +529,24 @@ SQL;
         $result = $this->query($sql);
         $row = $result->fetch_assoc();
         return $row;
+    }
+
+    public function getProfileMedia($personId = null, $tree = null)
+    {
+        //get default media
+        $defaultmedia = $this->getdefaultmedia($personId);
+        //$mediaID = "../tng/photos/". $defaultmedia['thumbpath'];
+
+        if ($defaultmedia['thumbpath'] == null AND $person['sex'] == "M") {
+             $mediaID = "./". $tngDirectory. "/img/male.jpg";
+        }
+        if ($defaultmedia['thumbpath'] == null AND $person['sex'] == "F") {
+             $mediaID = "./". $tngDirectory. "/img/female.jpg";
+        }
+        if ($defaultmedia['thumbpath'] !== null) {
+            $mediaID = $photosPath. "/" . $defaultmedia['thumbpath'];
+        }
+        return $mediaID;
     }
 
 
@@ -572,6 +644,122 @@ SQL;
     }
     return $rows;
 }
+
+/*****************
+ * Get current birthdays, 
+ * marriage anniversaries
+ * death anniversaries
+ *******************/
+public function getCurrentBirthday()
+    {
+        $tables = $this->getTngTables();
+
+        $sql = <<<SQL
+SELECT personid,
+       firstname,
+       lastname,
+       birthdate,
+       birthplace,
+       private,
+       famc,
+       gedcom,
+       Year(Now()) - Year(birthdatetr) AS Age
+FROM   {$tables['people_table']}
+WHERE
+    DATE(CONCAT(YEAR(CURDATE()), RIGHT(birthdatetr, 6)))
+        BETWEEN 
+            DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+        AND
+            DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+       AND living = 1
+ORDER BY
+    month(birthdatetr),
+    Day(birthdatetr),
+    lastname
+SQL;
+
+        $result = $this->query($sql);
+
+        $rows = array();
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+public function getCurrentMAnniversaries()
+    {
+        $tables = $this->getTngTables();
+        $sql = <<<SQL
+SELECT h.gedcom,
+	   h.personid AS personid1,
+       h.firstname AS firstname1,
+       h.lastname AS lastname1,
+       w.personid AS personid2,
+       w.firstname AS firstname2,
+       w.lastname AS lastname2,
+	   f.familyID,
+       f.marrdate,
+       f.marrplace,
+       f.private,
+       f.divdate,
+       Year(Now()) - Year(marrdatetr) AS Years
+FROM   {$tables['families_table']} as f
+    LEFT JOIN {$tables['people_table']} AS h
+              ON f.husband = h.personid
+       LEFT JOIN {$tables['people_table']} AS w
+              ON f.wife = w.personid
+# WHERE  Month(f.marrdatetr) = MONTH(ADDDATE(now(), INTERVAL 3 month))
+  WHERE  DATE(CONCAT(YEAR(CURDATE()), RIGHT(f.marrdatetr, 6)))
+          BETWEEN 
+              DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+          AND
+              DATE_ADD(CURDATE(), INTERVAL 1 DAY)     
+ORDER  BY Day(f.marrdatetr)
+          
+SQL;
+        $result = $this->query($sql);
+
+        $rows = array();
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+public function getCurrentDAnniversaries()
+{
+    $tables = $this->getTngTables();
+    $sql = <<<SQL
+SELECT personid,
+   firstname,
+   lastname,
+   deathdate,
+   deathplace,
+   gedcom,
+   Year(Now()) - Year(deathdatetr) AS Years
+FROM   {$tables['people_table']}
+WHERE  DATE(CONCAT(YEAR(CURDATE()), RIGHT(deathdatetr, 6)))
+      BETWEEN 
+          DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+      AND
+          DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+   AND living = 0
+ORDER  BY month(deathdatetr),
+        Day(deathdatetr),
+      lastname
+SQL;
+    $result = $this->query($sql);
+
+    $rows = array();
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
+
+
 /***
 public function guessVersion()
 {

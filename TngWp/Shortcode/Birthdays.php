@@ -15,7 +15,7 @@ class TngWp_Shortcode_Birthdays extends TngWp_Shortcode_AbstractShortcode
         $this->content->init();
         $monthyear = filter_input(INPUT_GET, 'monthyear', FILTER_SANITIZE_SPECIAL_CHARS);
 		$currentPerson = $this->content->getCurrentPersonId();
-        
+        var_dump($currentPerson);
 		if ($monthyear == "") {
             $month = date('m');
             $year = date('Y');
