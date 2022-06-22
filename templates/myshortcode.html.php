@@ -10,7 +10,7 @@
 </div>
 <h1>
 <?php
-echo $x
+
 ?>
 </h1>
 <div>
@@ -68,8 +68,28 @@ In TngCustom.php
 		"FamilySheet",
 		"BirthdaysCustom",
 		"ManniversariesCustom",
-        "DanniversariesCustom"
-        
-		
+        "DanniversariesCustom"   		
 		
     );
+
+    
+/********************** Get privacy settings from TNG set up. *****
+$database_host = "localhost";
+$database_name = "upavadi_for_v13";
+$database_username = "root";
+$database_password = '';
+
+$rootpath = "C:/wamp64/www/tng13/";
+$tngdomain = "http://localhost/tng13/";
+
+$mediapath = "media";
+$photopath = "photos";
+
+$requirelogin = "1";
+$treerestrict = "0";
+$defaulttree = "upavadi_1";
+***********************************
+Wordpress:
+Tng Path = esc_attr(get_option('tng-api-tng-path'))
+
+*****************************************************************************/
