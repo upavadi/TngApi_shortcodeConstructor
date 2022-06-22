@@ -14,7 +14,7 @@ abstract class TngWp_Shortcode_AbstractShortcode
      */
     protected $templates;
 
-    public function init(TngWp_ShortcodeContent $content, $templates)
+    public function init(TngWp_ShortcodeContent $content, $templates, TngWp_PrivacyContent $custom = null)
     {
         $this->content = $content;
         $this->templates = $templates;
