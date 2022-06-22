@@ -12,7 +12,7 @@ class TngWp_Shortcode_LandingPage extends TngWp_Shortcode_AbstractShortcode
         $url = $this->content->getTngUrl();
 		$photos = $this->content->getTngPhotoFolder();
 		$photosPath = $url. $photos;
-		$profileImage = $photosPath. $this->content->getProfileMedia($personId);
+		$profileImage = $this->content->getProfileMedia($personId);
 		$currentBirthday = $this->content->getCurrentBirthday();
         $currentmanniversary = $this->content->getCurrentMAnniversaries();
         $currentdanniversaries = $this->content->getCurrentDAnniversaries();
@@ -26,7 +26,6 @@ class TngWp_Shortcode_LandingPage extends TngWp_Shortcode_AbstractShortcode
             'danniversaries' => $this->content->getCurrentDAnniversaries(),
             'date' => date("l, jS F Y")
         );
-		
-        return $this->templates->render('landing-page.html', $context);
+		return $this->templates->render('landing-page.html', $context);
     }
 }
