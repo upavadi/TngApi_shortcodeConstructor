@@ -65,6 +65,7 @@ var_dump($rootPath);
 if (file_exists($tngPath)) {
 
 	$content = TngWp_ShortcodeContent::instance();
+	$p_content = TngWp_PrivacyContent::instance();
 	$content->addShortcode(new TngWp_Shortcode_MyShortcode());
 	$content->addShortcode(new TngWp_Shortcode_SubmitImage());
 	$content->addShortcode(new TngWp_Shortcode_Birthdays());
