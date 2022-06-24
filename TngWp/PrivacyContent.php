@@ -41,23 +41,25 @@ class TngWp_PrivacyContent extends TngWp_ShortcodeContent
         return $tng_context;
     }
 
-    public function userPrivacy () {
+    public function userPrivacy() {
         $content = $this->getContent();
         $tngUser = $content->getTngUser();
         /** from TNG User *****/ 
         $user_context = array();
+        if(isset($tngUser)) {
        $user_context['living'] = $tngUser['allow_living']; // Show Living Data
        $user_context['private'] = $tngUser['allow_private']; // Show Private Individuals
        $user_context['lds'] = $tngUser['allow_lds']; //Show LDS Data	allow_lds
        $user_context['usertree'] = $tngUser['mygedcom']; //User Tree	mygedcom
        $user_context['accesstree'] = $tngUser['gedcom']; // TREE ACCSS
+       }
       return $user_context;
     }
 
-    function gethim() {
+    function testPrivacy() {
     $content = $this->getContent();
     $currentPerson = $content->getConfigPath();
-    return $currentPerson. "This is Privacy function";   
+    return $currentPerson. "This is Testing Privacy function";   
     }
 
 /*** All custom functions below this line please*******/
