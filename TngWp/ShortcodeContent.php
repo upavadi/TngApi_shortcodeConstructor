@@ -121,14 +121,14 @@ class TngWp_ShortcodeContent
     
     }
 
-    /** Require Login */
+    /** Require Login  REMOVE*/
     function requireLogin() {
         $configPath = $this->getConfigPath();
         include $configPath;
         return $requirelogin;
     }
 
-    /** Restrict Access to tree ****/
+    /** Restrict Access to tree REMOVE ****/
     function treeAccess() {
         $configPath = $this->getConfigPath();
         include $configPath;
@@ -181,7 +181,7 @@ class TngWp_ShortcodeContent
             //   throw new RuntimeException(mysqli_error($this->db));
             }
             $row = $result->fetch_assoc();
-            $this->currentPerson = $row['personID'];
+            if (isset($row['personID'])) $this->currentPerson = $row['personID'];
             $this->db = $db;
             return $this;
 
@@ -279,7 +279,7 @@ class TngWp_ShortcodeContent
     public function getTngUserName()
     {
         $user = $this->getTngUser();
-        return $user['username'];
+        if (isset($user['username'])) return $user['username'];
     }
 
     public function getCurrentPersonId()
@@ -289,8 +289,9 @@ class TngWp_ShortcodeContent
 
     public function getPersonName($personId)
     {
+        static $name;
         $person = $this->getPerson($personId);
-        $name = $person['firstname'] . $person['lastname'];
+        if(isset($person)) $name = $person['firstname'] . $person['lastname'];
 
         return $name;
     }
@@ -421,13 +422,14 @@ SQL;
     
     public function getPerson($personId = null, $tree = null)
     {
+        static $userPrivate, $personPrivate;
         if (!$personId) {
             $personId = $this->currentPerson;
         }
-
+        static $gedcom;
         $user = $this->getTngUser();
 
-        $gedcom = $user['gedcom'];
+        if(isset($user)) $gedcom = $user['gedcom'];
         // If we are searching, enter $tree value
         if ($tree) {
             $gedcom = $tree;
@@ -449,8 +451,10 @@ WHERE personID = '{$personId}'
 SQL;
         $result = $this->query($sql);
         $row = $result->fetch_assoc();
-        $userPrivate = $user['allow_private'];
-        $personPrivate = $row['private'];
+        if (isset($user)) {
+            $userPrivate = $user['allow_private'];
+            $personPrivate = $row['private'];
+        }   
         if ($personPrivate > $userPrivate) {
             $row['firstname'] = 'Private:';
 			$row['lastname'] = ' Details withheld';
@@ -505,18 +509,18 @@ SQL;
         return $row;
     }
 
-    /**** Media ********** */
+/**** *********************Media ************************* */
 public function getDefaultMedia($personId = null, $tree = null)
     {
-
+static $gedcom;
         if (!$personId) {
             $personId = $this->currentPerson;
         }
         $user = $this->getTngUser();
-        $userPrivate = $user['allow_private'];
-        $gedcom = $user['gedcom'];
+        //$userPrivate = $user['allow_private'];
+        if (isset($user)) $gedcom = $user['gedcom'];
         $treeWhere = null;
-        if ($gedcom) {
+        if (($gedcom)) {
             $treeWhere = ' AND m.gedcom = "' . $gedcom . '"';
         }
 	$sql = <<<SQL
@@ -538,7 +542,8 @@ SQL;
         $photos = $this->getTngPhotoFolder();
         $url = $this->getTngUrl();
         $photosPath = $url. $photos;
-        //$mediaID = "../tng/photos/". $defaultmedia['thumbpath'];
+        $person = $this->getPerson($personId);
+        $mediaID ="";
 
         if ($defaultmedia['thumbpath'] == null AND $person['sex'] == "M") {
              $mediaID = "./". $tngDirectory. "/img/male.jpg";
@@ -560,7 +565,8 @@ SQL;
 public function getDeathAnniversaries($month, $tree = null)
     {
         $user = $this->getTngUser();
-        $gedcom = $user['gedcom'];
+        $gedcom = "";
+        if(isset($user['gedcom'])) $gedcom = $user['gedcom'];
         // If we are searching, enter $tree value
         if ($tree) {
             $gedcom = $tree;
