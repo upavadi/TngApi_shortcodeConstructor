@@ -2,7 +2,7 @@
 /** Sample Text
 * How to add shortcode FOR THIS PAGE to TNG Shortcode Constructor
 **/
-
+echo ($requireLogin); //variable
 ?>
 <div>
 <h1>How this shortcode was added to the tng-shortcode-constructor</h1>
