@@ -7,7 +7,9 @@ class TngWp_Shortcode_SubmitImage extends TngWp_Shortcode_AbstractShortcode
      public function show()
      {
         $this->content->init();
-        $requireLogin = $this->content->requireLogin(); //in setup
+        $content = TngWp_ShortcodeContent::instance();
+        $p_content = TngWp_PrivacyContent::instance();
+        $requireLogin = $p_content->requireLogin(); //in setup
         $treeAccess = $this->content->treeAccess(); //in setup
         $tngUser = $this->content->getTngUser();
         $context = array(

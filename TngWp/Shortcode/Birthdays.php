@@ -12,10 +12,15 @@ class TngWp_Shortcode_Birthdays extends TngWp_Shortcode_AbstractShortcode
 
     public function show()
     {
+        static $userTree, $tngAllowLiving;
         $this->content->init();
+        $content = array(); // shortcodeContent array
+        $p_content = array(); // privacyContent array
+        $content = TngWp_ShortcodeContent::instance(); 
+        $p_content = TngWp_PrivacyContent::instance(); 
         $monthyear = filter_input(INPUT_GET, 'monthyear', FILTER_SANITIZE_SPECIAL_CHARS);
 		$currentPerson = $this->content->getCurrentPersonId();
-        var_dump($currentPerson);
+    //var_dump($currentPerson);
 		if ($monthyear == "") {
             $month = date('m');
             $year = date('Y');
@@ -23,19 +28,21 @@ class TngWp_Shortcode_Birthdays extends TngWp_Shortcode_AbstractShortcode
             $month = substr($monthyear, 3, 2);
             $year = substr($monthyear, 6, 4);
         }
-        $requireLogin = $this->content->requireLogin(); //in setup
-        $treeAccess = $this->content->treeAccess(); //in setup
+        $requireLogin = $p_content->requireLogin(); //in setup
+        $treeAccess = $p_content->treeAccess(); //in setup
         $tngUser = $this->content->getTngUser();
+        if(isset($tngUser)) {
         $tngAllowLiving = $tngUser['allow_living']; 
         $userTree = $tngUser['mygedcom']; 
         $userRestrictTree = $tngUser['gedcom']; 
-
+        }
         $birthdays = $this->content->getBirthdays($month);
         foreach ($birthdays as $index => $birthday) {
             $birthdate = strtotime($birthday['birthdate']);
             $age = $year - date('Y', $birthdate);
             $birthdays[$index]['age'] = $age;
         }
+    //var_dump($tngUser);
         $date = new DateTime();
         $date->setDate($year, $month, 01);
         $context = array(
@@ -44,6 +51,7 @@ class TngWp_Shortcode_Birthdays extends TngWp_Shortcode_AbstractShortcode
             'date' => $date,
 			'monthyear' => $monthyear,
             'birthdays' => $birthdays,
+            'age' => $age,
             'requireLogin' => $requireLogin,
             'treeAccess' => $treeAccess,
 			'userTree' =>$userTree,
