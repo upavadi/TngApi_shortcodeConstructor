@@ -121,17 +121,11 @@ class TngWp_ShortcodeContent
     
     }
 
-    /** Require Login  REMOVE*/
-    function requireLogin() {
-        $configPath = $this->getConfigPath();
-        include $configPath;
-        return $requirelogin;
-    }
-
     /** Restrict Access to tree REMOVE ****/
     function treeAccess() {
         $configPath = $this->getConfigPath();
         include $configPath;
+        if ($requirelogin == "1")
         return $treerestrict;
     }
     
@@ -299,8 +293,9 @@ class TngWp_ShortcodeContent
     /*** Birthdays ******/   
     public function getBirthdays($month, $tree = null)
     {
+        static $gedcom;
         $user = $this->getTngUser();
-        $gedcom = $user['gedcom'];
+       if (isset($user)) $gedcom = $user['gedcom'];
         // If we are searching, enter $tree value
         if ($tree) {
             $gedcom = $tree;
@@ -328,13 +323,6 @@ SQL;
 
         $rows = array();
         while ($row = $result->fetch_assoc()) {
-            $userPrivate = $user['allow_private'];
-			$birthdayPrivate = $row['private'];
-			if ($birthdayPrivate > $userPrivate) {
-				$row['firstname'] = 'Private:';
-				$row['lastname'] = ' Details withheld';
-
-			}
 			$rows[] = $row;
         }
 		return $rows;
@@ -347,6 +335,7 @@ SQL;
             $personId = $this->currentPerson;
         }
         $user = $this->getTngUser();
+        if (isset($user)) 
         $gedcom = $user['gedcom'];
         // If we are searching, enter $tree value
         if ($tree) {
@@ -365,13 +354,6 @@ WHERE (husband = '{$personId}' or wife = '{$personId}') {$treeWhere}
 SQL;
         $result = $this->query($sql);
         $row = $result->fetch_assoc();
-        $userPrivate = $user['allow_private'];
-        $familyPrivate = $row['private'];
-        $personPrivate = $this->getPerson()['private'];
-        if ($personPrivate > $userPrivate) {
-            $row['marrdate'] = 'Private';
-			$row['marrplace'] = ' Details withheld';
-        }
         return $row;
     }
 
@@ -422,7 +404,6 @@ SQL;
     
     public function getPerson($personId = null, $tree = null)
     {
-        static $userPrivate, $personPrivate;
         if (!$personId) {
             $personId = $this->currentPerson;
         }
@@ -451,26 +432,19 @@ WHERE personID = '{$personId}'
 SQL;
         $result = $this->query($sql);
         $row = $result->fetch_assoc();
-        if (isset($user)) {
-            $userPrivate = $user['allow_private'];
-            $personPrivate = $row['private'];
-        }   
-        if ($personPrivate > $userPrivate) {
-            $row['firstname'] = 'Private:';
-			$row['lastname'] = ' Details withheld';
-        }
         return $row;
     }
     public function getFamilyById($familyId = null, $tree = null)
     {
         $user = $this->getTngUser();
+        if (isset($user)) 
         $gedcom = $user['gedcom'];
         // If we are searching, enter $tree value
         if ($tree) {
             $gedcom = $tree;
         }
         $treeWhere = null;
-        if ($gedcom) {
+        if (isset($user['gedcom'])) {
             $treeWhere = ' AND gedcom = "' . $gedcom . '"';
         }
         $sql = <<<SQL
@@ -630,6 +604,7 @@ w.lastname AS lastname2,
 w.private AS private2,
 w.gedcom,
 f.gedcom,
+f.living,
 f.private,
 f.familyID,
 f.marrdate,

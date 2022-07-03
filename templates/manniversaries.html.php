@@ -81,6 +81,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.
 	$tngcontent = TngWp_ShortcodeContent::instance()->init();
 	$user = $tngcontent->getTngUser();
 	$usertree = $user['gedcom'];
+	$url = $tngcontent->getTngUrl();
 
 	?>
 <div class="container-fluid table-responsive">
@@ -103,57 +104,31 @@ Clicking on a name takes you to the Individual's FAMILY Page.
 	<?php foreach ($manniversaries as $manniversary):
 		$manniversarydate = strtotime($manniversary['marrdate']);
 		$Years = $year - date('Y', $manniversarydate);
-		$tree = $manniversary['gedcom'];
-		$firstname1 = $manniversary['firstname1'];
-		$lastname1 = $manniversary['lastname1'];
-		$firstname2 = $manniversary['firstname2'];
-		$lastname2 = $manniversary['lastname2'];
+		$personId1 = $manniversary['personid1']; 
+		$personId2 = $manniversary['personid2'];
+		$privacycontent = TngWp_PrivacyContent::instance()->init();
+		$family_living = $privacycontent->doManniversaryLiving($personId1, $personId2);
+		$tree = $family_living['gedcom'];
+		$personUrl1 = $url. "getperson.php?personID=". $personId1. "&tree=". $userTree;
+		$personUrl2 = $url. "getperson.php?personID=". $personId2. "&tree=". $userTree;
+		$familyID = $manniversary['familyID'];
+		$firstname1 = $family_living['firstname1'];
+		$lastname1 = $family_living['lastname1'];
+		$firstname2 = $family_living['firstname2'];
+		$lastname2 = $family_living['lastname2'];
+	//	$marrdate = $family_living['mardate']; //echo $marrdate;
+		$defaultmedia1 = $family_living['defaultmedia1'];
+		$defaultmedia2 = $family_living['defaultmedia2'];
+		$marrdate = $manniversary['marrdate'];
+		$marrplace = $manniversary['marrplace'];
 		$div_date = $manniversary['divdate'];
 
-		$familyPrivacy = $manniversary['private'];
-		$photos = $tngcontent->getTngPhotoFolder();
-		$personId1 = $manniversary['personid1'];
-		$personId2 = $manniversary['personid2'];
-		$personPrivacy1 = $tngcontent->getPerson($personId1)['private'];
-		$personPrivacy2 = $tngcontent->getPerson($personId2)['private'];
-		
-		//get default media
-		$defaultmedia1 = $tngcontent->getDefaultMedia($personId1, $tree);
-		$defaultmedia2 = $tngcontent->getDefaultMedia($personId2, $tree);
-		$photosPath = $url. $photos;
-		$mediaID1 = $photosPath."/". $defaultmedia1['thumbpath'];
-		$mediaID2 = $photosPath."/". $defaultmedia2['thumbpath'];
-
-		
-		if ($familyPrivacy && !$allowAdmin) {
-			$manniversary['firstname1'] = 'Private:';
-			$manniversary['firstname2'] = 'Private:';
-			$manniversary['lastname1'] = ' Details withheld';
-			$manniversary['lastname2'] = ' Details withheld';
-			$manniversary['marrdate'] = "?";
-			$manniversary['Years'] = "";
-			$mediaID1 = $mediaID2  = "";
-			
+		//Suppress dates and years if LIVING or PRIVATE
+		if (($family_living['firstname1'] == 'Living') || ($family_living['firstname1'] == ['Private']) || ($family_living['firstname2'] == 'Living') || ($family_living['firstname2'] == ['Private']))
+		{ 
+		$marrdate = $marrplace = $Years = "";
 		}
 
-		if (!$familyPrivacy && $personPrivacy1 && !$allowAdmin) {
-			$manniversary['firstname1'] = 'Private:';
-			$manniversary['lastname1'] = ' Details withheld';
-			$manniversary['marrdate'] = "?";
-			$manniversary['Years'] = "";
-			$mediaID1 = "";
-		}
-
-		
-		if (!$familyPrivacy && $personPrivacy2 && !$allowAdmin) {
-			$manniversary['firstname2'] = 'Private:';
-			$manniversary['lastname2'] = ' Details withheld';
-			$manniversary['marrdate'] = "?";
-			$manniversary['Years'] = "";
-			$mediaID2 = "";
-		}
-
-	
 		//Ignore if divorced.
 		if ($div_date == '') {
 	?>
@@ -161,23 +136,23 @@ Clicking on a name takes you to the Individual's FAMILY Page.
 		<tr class="row">
 			<td class="col-md-3 tdfront">
 			<div>
-			<?php if ($defaultmedia1['thumbpath']) { ?>
+			<?php if ($defaultmedia1) { ?>
 			<img src="<?php 
-			echo "$mediaID1";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
-			<br /><a href="/family/?personId=<?php echo $manniversary['personid1'];?>&amp;tree=<?php echo $tree; ?>">
-			<?php echo $manniversary['firstname1']. ""; ?><?php echo " ". $manniversary['lastname1']; ?></a></div></td>
+			echo "$defaultmedia1";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
+			<br /><a href="<?php echo $personUrl1;?>">
+			<?php echo $firstname1. ""; ?><?php echo " ". $lastname1; ?></a></div></td>
 			<div>
-			<td class="col-md-3 tdfront"><?php if ($defaultmedia2['thumbpath']) { ?>
+			<td class="col-md-3 tdfront"><?php if ($defaultmedia2) { ?>
 			<img src="<?php 
-			echo "$mediaID2";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
-			<br /><a href="/family/?personId=<?php echo $manniversary['personid2'];?>&amp;tree=<?php echo $tree; ?>">
-			<?php echo $manniversary['firstname2']; ?><?php echo " ". $manniversary['lastname2']; ?></a></div></td>
-			<td class="col-md-2 tdfront"><?php echo $manniversary['marrdate']; ?></td>
-			<td class="col-md-2 tdfront"><?php echo $manniversary['marrplace']; ?></td>
-			<td class="col-md-1 tdfront"><?php echo $manniversary['Years']; ?></td>
+			echo "$defaultmedia2";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
+			<br /><a href="<?php echo $personUrl2;?>">
+			<?php echo $firstname2; ?><?php echo " ". $lastname2; ?></a></div></td>
+			<td class="col-md-2 tdfront"><?php echo $marrdate; ?></td>
+			<td class="col-md-2 tdfront"><?php echo $marrplace; ?></td>
+			<td class="col-md-1 tdfront"><?php echo $Years; ?></td>
 			<?php 
 			if ($usertree == '') { ?>
-				<td class="col-md-1 tdfront"><?php echo $manniversary['gedcom']; ?></td>
+				<td class="col-md-1 tdfront"><?php echo $tree; ?></td>
         </tr>
 	<?php 
 		}

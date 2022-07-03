@@ -10,12 +10,26 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($danniversaries as $danniversary): ?>
+        <?php 
+        $privacycontent = TngWp_PrivacyContent::instance()->init();
+        $user = $tngcontent->getTngUser();
+        
+        foreach ($danniversaries as $danniversary): 
+          $personId = $danniversary['personid'];
+          $privacy = $privacycontent->doPrivacy($personId); 
+          $url = $tngcontent->getTngUrl();
+        $personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;  
+        $firstname = $privacy['firstname'];
+        $lastname = $privacy['lastname'];
+        $years = $danniversary['Years'];
+         
+       if ($privacy['private'] == 1 && $user['allow_private'] == "0" )   $years = "";  
+        ?>
             <tr>
                 <td><?php echo $danniversary['deathdate']; ?></td>
-                <td><a href="/family/?personId=<?php echo $danniversary['personid']; ?>">
-                        <?php echo $danniversary['firstname']; ?><?php echo $danniversary['lastname']; ?></a></td>
-                <td><?php echo $danniversary['Years']; ?></td>
+                <td><a href="<?php echo $personUrl; ?>">
+                        <?php echo $firstname. " ". $lastname; ?></a></td>
+                <td><?php echo $years; ?></td>
 
             </tr>
         <?php endforeach; ?>

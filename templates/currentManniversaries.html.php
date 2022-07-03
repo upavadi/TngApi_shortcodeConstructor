@@ -14,36 +14,36 @@
     <tbody>
         <?php 
          $tngcontent = TngWp_ShortcodeContent::instance()->init();
-        foreach ($manniversaries as $manniversary):
+         $privacycontent = TngWp_PrivacyContent::instance()->init();
+         $tngFolder = $tngcontent->getTngIntegrationPath();
+        
+         foreach ($manniversaries as $manniversary):
             $tree = $manniversary['gedcom'];
             $personId1 = $manniversary['personid1'];
             $personId2 = $manniversary['personid2'];
+            $privacycontent = TngWp_PrivacyContent::instance()->init();
+		    $family_living = $privacycontent->doManniversaryLiving($personId1, $personId2);
+	
+            $firstname1 = $family_living['firstname1'];
+            $lastname1 = $family_living['lastname1'];
+            $firstname2 = $family_living['firstname2'];
+            $lastname2 = $family_living['lastname2'];
             $divorceDate = $manniversary['divdate'];
-            $familyPrivacy = $manniversary['private'];
-            $personPrivacy1 = $tngcontent->getPerson($personId1)['private'];
-            $personPrivacy2 = $tngcontent->getPerson($personId2)['private'];
-            //  $dmedia1 = $tngcontent->getDefaultMedia($personId1, $tree);
-            //  $dmedia2 = $tngcontent->getDefaultMedia($personId2, $tree);
-            //  $mediaPath1 = $photosPath."/". $dmedia1['thumbpath'];
-            // $mediaPath2 = $photosPath."/". $dmedia2['thumbpath'];
-    
-            if ($familyPrivacy) {
-                $manniversary['firstname1'] = 'Private:';
-                $manniversary['firstname2'] = 'Private:';
-                $manniversary['lastname1'] = ' Details withheld';
-                $manniversary['lastname2'] = ' Details withheld';
-                $manniversary['marrdate'] = "?";
-                $manniversary['Years'] = "";               
-                
-        }
+            $years = $manniversary['Years'];
+
+            //Suppress dates and years if LIVING or PRIVATE
+            if (($family_living['firstname1'] == 'Living') || ($family_living['firstname1'] == ['Private']) || ($family_living['firstname2'] == 'Living') || ($family_living['firstname2'] == ['Private']))
+            { 
+            $marrdate = $marrplace = $years = "";
+            }
         ?>
             <tr>
                 <td><?php echo $manniversary['marrdate']; ?></a></td>
                 <td><a href="/family/?personId=<?php echo $manniversary['personid1']; ?>">
-                        <?php echo $manniversary['firstname1']; ?><?php echo $manniversary['lastname1']; ?></a></td>
+                        <?php echo $firstname1. " "; ?><?php echo $lastname1; ?></a></td>
                 <td><a href="/family/?personId=<?php echo $manniversary['personid2']; ?>">
-                        <?php echo $manniversary['firstname2']; ?><?php echo $manniversary['lastname2']; ?></a></td>
-                <td><?php echo $manniversary['Years']; ?></td>
+                        <?php echo $firstname2; ?><?php echo $lastname2; ?></a></td>
+                <td><?php echo $years; ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

@@ -76,11 +76,12 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 	<?php
 	//get and hold current user
 	$tngcontent = TngWp_ShortcodeContent::instance()->init();
+	$privacycontent = TngWp_PrivacyContent::instance()->init();
 	$user = $tngcontent->getTngUser(); 
-	$login = $tngcontent->init();
-	$usertree = $user['gedcom'];
+	$privacy = array();
+	if (isset($user)) $userTree = $user['gedcom'];
 	
-	/** set Tree Access */
+	/** set Tree Access Here*/
 	?>
 <div class="container-fluid table-responsive">
 <div class="col-md-12">
@@ -94,7 +95,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 		<td class="tdback col-md-1">Birth Date</td>	
 		<?php 
 		$url = $tngcontent->getTngUrl();
-			if ($usertree == '') { ?>
+		if ($userTree == '') { ?>
 		<td class="tdback col-md-1">Tree</td>
 				
 		<?php } ?>
@@ -129,29 +130,40 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 		$ageAtDeath = $i->format("%Y");
 		}	else { 	$ageAtDeath = "";
 		}	
-		//$photos = $tngcontent->getTngPhotoFolder(); 
-		$personId = $danniversary['personid'];
-		$defaultmedia = $tngcontent->getDefaultMedia($personId, $tree); 
-		$photosPath = $url. $photos;
-		$mediaID = $photosPath."/". $defaultmedia['thumbpath'];
-		$birthdate = $danniversary['birthdate']; 
+		
+		$personId = $danniversary['personid']; 
+		$privacy = $privacycontent->doPrivacy($personId); 
+
+		if (isset($privacy['firstname'])) {
+		$firstname = $privacy['firstname']; 
+		$lastname = $privacy['lastname'];
+		$birthdate = $privacy['birthdate'];
+		$deathdate = $privacy['deathdate'];
+		$deathplace = $privacy['deathplace'];
+		$defaultmedia = $privacy['defaultmedia'];
+		if (isset($privacy['years'] ))
+		$Years ="";
+		if (isset($privacy['age'] ))
+		$ageAtDeath = "";
+		}
 		$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
+//var_dump($privacy);
 	?>
 		<tr class="row">
 			<td class="col-md-3 tdfront" style="text-align: center">
 			<div>
-			<?php if ($defaultmedia['thumbpath']) { ?>
+			<?php { ?>
 			<img src="<?php 
-			echo "$mediaID";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
+			echo "$defaultmedia";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?>
 			<br /><a href="<?php echo $personUrl; ?>">
-			<?php echo $danniversary['firstname']. " "; echo $danniversary['lastname']; ?></a></div></td>
-			<td class="col-md-2 tdfront"><?php echo $danniversary['deathdate']; ?></td>
-			<td class="col-md-2 tdfront"><?php echo $danniversary['deathplace']; ?></td>
+			<?php echo $firstname. " "; echo $lastname; ?></a></div></td>
+			<td class="col-md-2 tdfront"><?php echo $privacy['deathdate']; ?></td>
+			<td class="col-md-2 tdfront"><?php echo $privacy['deathplace']; ?></td>
 			<td class="col-md-2 tdfront" style="text-align: center"><?php echo $Years ?></td>
 			<td class="col-md-1 tdfront" style="text-align: center"><?php echo $ageAtDeath; ?> </td>
 			<td class="col-md-1 tdfront" style="text-align: center"><?php echo $birthdate; ?> </td>
 			<?php 
-		if ($usertree == '') { ?>
+		if ($userTree == '') { ?>
 			<td class="col-md-1 tdfront"><?php echo $danniversary['gedcom']; ?></td>
         </tr>
 		<?php 

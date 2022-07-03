@@ -76,9 +76,14 @@ Clicking on a name takes you to the Individual's Family Page
 <?php
 //get and hold current user
 $tngcontent = TngWp_ShortcodeContent::instance()->init();
+$privacycontent = TngWp_PrivacyContent::instance()->init();
 $user = $tngcontent->getTngUser(); 
-$allowAdmin = $user['allow_private'];
+$privacy = array();
+$usertree = ''; 
+if (isset($user)) {
+//$allowAdmin = $user['allow_private'];
 $usertree = $user['gedcom'];
+}
 $tngFolder = $tngcontent->getTngIntegrationPath();
 ?>
 
@@ -100,61 +105,38 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
 	<?php } ?>
 	</tr>
     <?php foreach ($birthdays as $birthday):
+	$personId = $birthday['personid']; 
+	//$privacy = $privacycontent->doPrivate($personId);
+	$allow_living = $privacycontent->doLiving($personId);
 	$tree = $birthday['gedcom'];
-	$firstname = $birthday['firstname'];
-	$lastname = $birthday['lastname'];
-	$tree = $birthday['gedcom'];
-	$personId = $birthday['personid'];
-	$parentId = $birthday['famc'];
-	$families = $tngcontent->getFamily($personId, $tree, null);
-	$parents = $tngcontent->getFamilyById($parentId, $tree = null); 
-	$personPrivacy = $birthday['private'];
-	$familyPrivacy = $families['private'];
-	$parentPrivacy = $parents['private'];
-	$view = true;
-	//get default media
-	$photos = $tngcontent->getTngPhotoFolder();
-	$personId = $birthday['personid'];
-	$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
-	
-	$defaultmedia = $tngcontent->getDefaultMedia($personId, $tree);
-	 
-	$photosPath = $url. $photos;
-	//$mediaID = "";
-	if (isset($defaultmedia['thumbpath'])) {
-	$mediaID = $photosPath."/". $defaultmedia['thumbpath'];
-	}
-	$view = "View";
-	/**** privacy: if individual is private OR family is private (husband or wife) or famc is private (Parents) ***/
-	if (($personPrivacy || $familyPrivacy || $parentPrivacy) && !$allowAdmin) {
-		$firstname = 'Private:';
-		$lastname = ' Details withheld';
-		$birthday['birthdate'] = "?";
-		$mediaID = "";
-		$birthday['age'] = "";
-		$view = false;
-	}
+	$firstname = $allow_living['firstname'];
+	$lastname = $allow_living['lastname'];
+	$tree = $allow_living['gedcom'];
+	$defaultmedia = $allow_living['defaultmedia'];
+	$birthdate = $allow_living['birthdate'];
+	$birthplace = $allow_living['birthplace'];
+	$age = $birthday['age']; 
+	if (isset($allow_living['age']) && $allow_living['age'] == '' ) {
+		$age = "";
 
-	if (!$tngAllowLiving) {
-		$firstname = 'Living:';
-		$lastname = ' Details withheld';
-		$birthday['birthdate'] = "?";
-		$mediaID = "";
-		$birthday['age'] = "";
-		$view = false;
 	}
+	
+	$view = true;
+	$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
+	// }
+	$view = "View";
 	?>
 	<tbody>
 	   <tr class="row">
             <td class="col-md-5 tdfront" style="text-align: center">
-			<?php if (isset($defaultmedia['thumbpath'])) { ?>
+			
 			<img src="<?php 
-			echo "$mediaID";  ?>" border='1' height='50' border-color='#000000'/> <?php } ?><br /> 
+			echo "$defaultmedia";  ?>" border='1' height='50' border-color='#000000'/><br /> 
 			<a href="<?php echo $personUrl; ?>">
                     <?php echo $firstname . " "; ?><?php echo $lastname; ?></a></td>
-            <td class="col-md-2 tdfront" style="text-align: center"><?php echo $birthday['birthdate']; ?></td>
-            <td class="col-md-2 tdfront" style="text-align: center"><?php echo $birthday['birthplace']; ?></td>
-            <td class="col-md-1 tdfront" style="text-align: center"><?php echo $birthday['age']; ?></td>
+            <td class="col-md-2 tdfront" style="text-align: center"><?php echo $birthdate; ?></td>
+            <td class="col-md-2 tdfront" style="text-align: center"><?php echo $birthplace; ?></td>
+            <td class="col-md-1 tdfront" style="text-align: center"><?php echo $age; ?></td>
 			<?php if($view) 
 					?>
 			<td class="col-md-1 tdfront" style="text-align: center";><a href="../?php echo $tngFolder; ?>/relationship.php?altprimarypersonID=&savedpersonID=&secondpersonID=<?php echo $birthday['personid'];?>&maxrels=2&disallowspouses=0&generations=15&tree=upavadi_1&primarypersonID=<?php echo $currentperson; ?>"><?php echo $view?></td>

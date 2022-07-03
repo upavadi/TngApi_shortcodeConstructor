@@ -1,5 +1,6 @@
 <!-- Upload images for logged in WP users only-->
 <?php
+var_dump($context);
 //Get max file size
 $upload_content = file_get_contents( __DIR__ ."/.htaccess");
 $file_size = (int)(substr($upload_content, 29));
