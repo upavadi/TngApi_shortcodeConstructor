@@ -742,6 +742,51 @@ SQL;
     return $rows;
 }
 
+public function getYesterdayTodayTomorrow() 
+{
+    $tables = $this->getTngTables();
+
+    $sql = "SELECT
+    personid,
+    firstname,
+    lastname,
+    gedcom,
+    sex,
+    birthdate,
+    birthdatetr,
+    deathdate,
+    deathdatetr,
+    FLOOR(DATEDIFF(CURDATE(), birthdatetr)/365.25) AS BirthAge,
+    FLOOR(DATEDIFF(deathdatetr, birthdatetr)/365.25) AS DeathAge,
+    FLOOR(DATEDIFF(deathdatetr, birthdatetr)/365.25) AS DeathYears
+    FROM   {$tables['people_table']}
+
+WHERE
+( DATE_FORMAT(birthdatetr, '%m-%d') IN (
+    DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%m-%d'), 
+    DATE_FORMAT(CURDATE(), '%m-%d'), 
+    DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 DAY), '%m-%d')
+    )
+AND
+living = 0)
+OR
+( DATE_FORMAT(deathdatetr, '%m-%d') IN (
+    DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%m-%d'), 
+    DATE_FORMAT(CURDATE(), '%m-%d'), 
+    DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 DAY), '%m-%d')
+    )
+AND
+living = 0)
+";
+$result = $this->query($sql);
+$rows = array();
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+return $rows;
+
+}
+
 
 
 /***
