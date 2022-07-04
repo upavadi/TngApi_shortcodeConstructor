@@ -72,6 +72,7 @@ if (file_exists($tngPath)) {
 	$content->addShortcode(new TngWp_Shortcode_Danniversaries());
 	$content->addShortcode(new TngWp_Shortcode_Manniversaries());
 	$content->addShortcode(new TngWp_Shortcode_LandingPage());
+	$content->addShortcode(new TngWp_Shortcode_Gone());
 	//var_dump(get_declared_classes());
 
 
