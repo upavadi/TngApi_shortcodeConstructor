@@ -34,13 +34,14 @@ echo "PHP Version = ". (phpversion()); //variable
 </div>
 <div>
 <b>Wordpress Options:</b>
-<li>Tng Path = esc_attr(get_option('tng-api-tng-path'))</li>
+<li>Tng url = esc_attr(get_option('tng-api-tng-url'))</li>
 <li>rootPath = esc_attr(get_option('tng-api-tng-path')</li>
 <li>Tng Integration Path = esc_attr(get_option('tng-base-tng-path')</li>
 ( These are the same variables as in TNG API )
-function
-$url = $content->getTngUrl();
-$genealogy = $content->getTngIntegrationPath();
-$IntegratedPath = dirname($url). "/". $genealogy;
+
+<br /><b>functions</b>
+<li>$url = $content->getTngUrl();</li>
+<li>$genealogy = $content->getTngIntegrationPath();</li>
+<li>$IntegratedPath = dirname($url). "/". $genealogy;</li>
 </div>
 
