@@ -313,6 +313,8 @@ class TngWp_ShortcodeContent
         birthplace,
         private,
         famc,
+        prefix,
+        suffix,
         gedcom
         FROM   {$this->tables['people_table']}
     WHERE  Month(birthdatetr) = {$month}
