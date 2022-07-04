@@ -11,7 +11,7 @@
 				</div>
 				<div>For full list of All Events, please login and navigate to  <a href="../events-today">Yesterday - Today - Tomorrow</a>
 				</div>
-				<div><?php include('birth_death.php'); ?></div>
+				<div>
 		
 <table class="born-article-table" >
     <tbody>
@@ -34,6 +34,9 @@
         $birthdate = $goneday['birthdate'];
         $deathdate = $goneday['deathdate'];
         $sex = $goneday['sex'];
+        $BirthAge = $goneday['BirthAge'];
+        $DeathAge = $goneday['DeathAge'];
+        $DeathYears = $goneday['DeathYears'];
         $personUrl = $tngUrl. 'getperson.php?personID='. $personId. '&tree='. $tree;
         
         $thumbPath = $content->getDefaultMedia($personId)['thumbpath'];  
