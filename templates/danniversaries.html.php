@@ -75,9 +75,9 @@ function goToToday() {
 Clicking on a name takes you to the Individual's FAMILY Page.</br>
 	<?php
 	//get and hold current user
-	$tngcontent = TngWp_ShortcodeContent::instance()->init();
+	$content = TngWp_ShortcodeContent::instance()->init();
 	$privacycontent = TngWp_PrivacyContent::instance()->init();
-	$user = $tngcontent->getTngUser(); 
+	$user = $content->getTngUser(); 
 	$privacy = array();
 	if (isset($user)) $userTree = $user['gedcom'];
 	
@@ -94,7 +94,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 		<td class="tdback col-md-1">Age at Death</td>
 		<td class="tdback col-md-1">Birth Date</td>	
 		<?php 
-		$url = $tngcontent->getTngUrl();
+		$url = $content->getTngUrl();
 		if ($userTree == '') { ?>
 		<td class="tdback col-md-1">Tree</td>
 				
@@ -146,7 +146,12 @@ Clicking on a name takes you to the Individual's FAMILY Page.</br>
 		if (isset($privacy['age'] ))
 		$ageAtDeath = "";
 		}
-		$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
+		$genealogy = $content->getTngIntegrationPath();
+		$url = $content->getTngUrl();
+		$Directory = basename($url );
+		$IntegratedPath = dirname($url). "/". $genealogy. "/";
+		$personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
+		
 //var_dump($privacy);
 	?>
 		<tr class="row">

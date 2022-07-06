@@ -13,9 +13,9 @@
     </thead>
     <tbody>
         <?php 
-         $tngcontent = TngWp_ShortcodeContent::instance()->init();
+         $content = TngWp_ShortcodeContent::instance()->init();
          $privacycontent = TngWp_PrivacyContent::instance()->init();
-         $tngFolder = $tngcontent->getTngIntegrationPath();
+         $tngFolder = $content->getTngIntegrationPath();
         
          foreach ($manniversaries as $manniversary):
             $tree = $manniversary['gedcom'];
@@ -30,6 +30,10 @@
             $lastname2 = $family_living['lastname2'];
             $divorceDate = $manniversary['divdate'];
             $years = $manniversary['Years'];
+            $url = $content->getTngUrl();
+            $IntegratedPath = dirname($url). "/". $genealogy. "/";
+            $personUrl1 = $IntegratedPath. "getperson.php?personID=". $personId1. "&tree=". $userTree;
+            $personUrl2 = $IntegratedPath. "getperson.php?personID=". $personId2. "&tree=". $userTree;
 
             //Suppress dates and years if LIVING or PRIVATE
             if (($family_living['firstname1'] == 'Living') || ($family_living['firstname1'] == ['Private']) || ($family_living['firstname2'] == 'Living') || ($family_living['firstname2'] == ['Private']))
@@ -39,9 +43,9 @@
         ?>
             <tr>
                 <td><?php echo $manniversary['marrdate']; ?></a></td>
-                <td><a href="/family/?personId=<?php echo $manniversary['personid1']; ?>">
+                <td><a href="<?php echo $personUrl1; ?>">
                         <?php echo $firstname1. " "; ?><?php echo $lastname1; ?></a></td>
-                <td><a href="/family/?personId=<?php echo $manniversary['personid2']; ?>">
+                <td><a href="<?php echo $personUrl2; ?>">
                         <?php echo $firstname2; ?><?php echo $lastname2; ?></a></td>
                 <td><?php echo $years; ?></td>
             </tr>

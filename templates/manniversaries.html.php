@@ -78,10 +78,10 @@ function goToToday() {
 Clicking on a name takes you to the Individual's FAMILY Page.
 	<?php
 	//get and hold current user
-	$tngcontent = TngWp_ShortcodeContent::instance()->init();
-	$user = $tngcontent->getTngUser();
+	$content = TngWp_ShortcodeContent::instance()->init();
+	$user = $content->getTngUser();
 	$usertree = $user['gedcom'];
-	$url = $tngcontent->getTngUrl();
+	$url = $content->getTngUrl();
 
 	?>
 <div class="container-fluid table-responsive">
@@ -94,7 +94,7 @@ Clicking on a name takes you to the Individual's FAMILY Page.
 			<td class="tdback col-md-2">Place</td>
 			<td class="tdback col-md-1" style="text-align: center">Years</td>
 			<?php 
-			$url = $tngcontent->getTngUrl();
+			$url = $content->getTngUrl();
 			if ($usertree == '') { ?>
 			<td class="tdback col-md-1">Tree</td>
 			<?php } ?>
@@ -109,8 +109,8 @@ Clicking on a name takes you to the Individual's FAMILY Page.
 		$privacycontent = TngWp_PrivacyContent::instance()->init();
 		$family_living = $privacycontent->doManniversaryLiving($personId1, $personId2);
 		$tree = $family_living['gedcom'];
-		$personUrl1 = $url. "getperson.php?personID=". $personId1. "&tree=". $userTree;
-		$personUrl2 = $url. "getperson.php?personID=". $personId2. "&tree=". $userTree;
+		//$personUrl1 = $url. "getperson.php?personID=". $personId1. "&tree=". $userTree;
+		//$personUrl2 = $url. "getperson.php?personID=". $personId2. "&tree=". $userTree;
 		$familyID = $manniversary['familyID'];
 		$firstname1 = $family_living['firstname1'];
 		$lastname1 = $family_living['lastname1'];
@@ -122,6 +122,13 @@ Clicking on a name takes you to the Individual's FAMILY Page.
 		$marrdate = $manniversary['marrdate'];
 		$marrplace = $manniversary['marrplace'];
 		$div_date = $manniversary['divdate'];
+
+		$genealogy = $content->getTngIntegrationPath();
+		$url = $content->getTngUrl();
+		$Directory = basename($url );
+		$IntegratedPath = dirname($url). "/". $genealogy. "/";
+		$personUrl1 = $IntegratedPath. "getperson.php?personID=". $personId1. "&tree=". $userTree;
+		$personUrl2 = $IntegratedPath. "getperson.php?personID=". $personId2. "&tree=". $userTree;
 
 		//Suppress dates and years if LIVING or PRIVATE
 		if (($family_living['firstname1'] == 'Living') || ($family_living['firstname1'] == ['Private']) || ($family_living['firstname2'] == 'Living') || ($family_living['firstname2'] == ['Private']))
