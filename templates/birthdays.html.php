@@ -75,16 +75,16 @@ function goToToday() {
 Clicking on a name takes you to the Individual's Family Page
 <?php
 //get and hold current user
-$tngcontent = TngWp_ShortcodeContent::instance()->init();
+$content = TngWp_ShortcodeContent::instance()->init();
 $privacycontent = TngWp_PrivacyContent::instance()->init();
-$user = $tngcontent->getTngUser(); 
+$user = $content->getTngUser(); 
 $privacy = array();
 $usertree = ''; 
 if (isset($user)) {
 //$allowAdmin = $user['allow_private'];
 $usertree = $user['gedcom'];
 }
-$tngFolder = $tngcontent->getTngIntegrationPath();
+$tngFolder = $content->getTngIntegrationPath();
 ?>
 
 <div class="container-fluid table-responsive">
@@ -97,7 +97,7 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
     <td class="tdback col-md-1">Age</td>
 	<td class="tdback col-md-1">Relationship</td>
     <?php 
-	$url = $tngcontent->getTngUrl();
+	$url = $content->getTngUrl();
 		
 	if ($usertree == '') { ?>
 	<td class="tdback col-md-1" style="text-align: center">Tree</td>
@@ -105,7 +105,7 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
 	<?php } ?>
 	</tr>
     <?php foreach ($birthdays as $birthday):
-	$personId = $birthday['personid']; 
+	$personId = $birthday['personid'];
 	//$privacy = $privacycontent->doPrivate($personId);
 	$allow_living = $privacycontent->doLiving($personId);
 	$tree = $birthday['gedcom'];
@@ -122,7 +122,11 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
 	}
 	
 	$view = true;
-	$personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
+	$genealogy = $content->getTngIntegrationPath();
+	$url = $content->getTngUrl();
+	$Directory = basename($url );
+	$IntegratedPath = dirname($url). "/". $genealogy. "/";
+	$personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
 	// }
 	$view = "View";
 	?>
@@ -139,7 +143,7 @@ $tngFolder = $tngcontent->getTngIntegrationPath();
             <td class="col-md-1 tdfront" style="text-align: center"><?php echo $age; ?></td>
 			<?php if($view) 
 					?>
-			<td class="col-md-1 tdfront" style="text-align: center";><a href="../?php echo $tngFolder; ?>/relationship.php?altprimarypersonID=&savedpersonID=&secondpersonID=<?php echo $birthday['personid'];?>&maxrels=2&disallowspouses=0&generations=15&tree=upavadi_1&primarypersonID=<?php echo $currentperson; ?>"><?php echo $view?></td>
+			<td class="col-md-1 tdfront" style="text-align: center";><a href="<?php echo $IntegratedPath; ?>/relationship.php?altprimarypersonID=&savedpersonID=&secondpersonID=<?php echo $birthday['personid'];?>&maxrels=2&disallowspouses=0&generations=15&tree=upavadi_1&primarypersonID=<?php echo $currentperson; ?>"><?php echo $view?></td>
 			<?php
 			
 			if ($usertree == '') { ?>

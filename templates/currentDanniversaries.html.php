@@ -11,14 +11,18 @@
     </thead>
     <tbody>
         <?php 
+        $content = TngWp_ShortcodeContent::instance()->init();
         $privacycontent = TngWp_PrivacyContent::instance()->init();
-        $user = $tngcontent->getTngUser();
+        $user = $content->getTngUser();
         
         foreach ($danniversaries as $danniversary): 
-          $personId = $danniversary['personid'];
-          $privacy = $privacycontent->doPrivacy($personId); 
-          $url = $tngcontent->getTngUrl();
-        $personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;  
+        $personId = $danniversary['personid'];
+        $privacy = $privacycontent->doPrivacy($personId); 
+        $url = $content->getTngUrl();
+        $genealogy = $content->getTngIntegrationPath();
+        $IntegratedPath = dirname($url). "/". $genealogy. "/";
+        $personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
+         
         $firstname = $privacy['firstname'];
         $lastname = $privacy['lastname'];
         $years = $danniversary['Years'];

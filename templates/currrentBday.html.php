@@ -8,19 +8,23 @@
     <th style="background-color: #EDEDED;">Age</th>
 
     <?php 
-    $tngcontent = TngWp_ShortcodeContent::instance()->init();
+    $content = TngWp_ShortcodeContent::instance()->init();
     $privacycontent = TngWp_PrivacyContent::instance()->init();
-    $tngFolder = $tngcontent->getTngIntegrationPath();
+    $tngFolder = $content->getTngIntegrationPath();
     foreach ($birthdays as $birthday): 
         $personId = $birthday['personid'];
         $allow_living = $privacycontent->doLiving($personId);
         $userTree = $birthday['gedcom'];
-        $url = $tngcontent->getTngUrl();
-        $personUrl = $url. "getperson.php?personID=". $personId. "&tree=". $userTree;
+        $url = $content->getTngUrl();
+        $genealogy = $content->getTngIntegrationPath();
+        $url = $content->getTngUrl();
+        $Directory = basename($url );
+        $IntegratedPath = dirname($url). "/". $genealogy. "/";
+	    $personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
         $parentId = $birthday['famc'];
         $tree = $birthday['gedcom'];
-    	$families = $tngcontent->getFamily($personId, $tree, null);
-        $parents = $tngcontent->getFamilyById($parentId, $tree = null); 
+    	$families = $content->getFamily($personId, $tree, null);
+        $parents = $content->getFamilyById($parentId, $tree = null); 
         
          $firstname = $allow_living['firstname'];  
          $lastname = $allow_living['lastname'];

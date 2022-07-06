@@ -14,7 +14,7 @@
         <td>
             <span style="color:#D77600; font-size:14pt">			
                 Welcome
-                <a href="/family/?personId=<?php echo $personId; ?>">
+                <a href="<?php echo $personUrl; ?>">
                     <?php echo $name; ?>
                 </a>
                 to Upavadi Family Site

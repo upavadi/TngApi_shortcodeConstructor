@@ -9,7 +9,7 @@
 				<div class="gone_header">Gone But Not Forgotten.</div>
 				<div class="gone_text">Birth and Death Anniversaries for Yesterday, Today and Tomorrow
 				</div>
-				<div>For full list of All Events, please login and navigate to  <a href="../events-today">Yesterday - Today - Tomorrow</a>
+				<div>For full list of All Events, please login and navigate to  <a href="../landing-page">Yesterday - Today - Tomorrow</a>
 				</div>
 				<div>
 		
@@ -25,6 +25,14 @@
 <?php	
     $content = array(); // shortcodeContent array
     $content = TngWp_ShortcodeContent::instance(); 
+
+
+    $genealogy = $content->getTngIntegrationPath();
+	$url = $content->getTngUrl();
+	$Directory = basename($url );
+	$IntegratedPath = dirname($url). "/". $genealogy. "/";
+
+
     //var_dump($gonedays);
     foreach ($gonedays as $goneday):
         $personId = $goneday['personid'];
@@ -37,7 +45,7 @@
         $BirthAge = $goneday['BirthAge'];
         $DeathAge = $goneday['DeathAge'];
         $DeathYears = $goneday['DeathYears'];
-        $personUrl = $tngUrl. 'getperson.php?personID='. $personId. '&tree='. $tree;
+        $personUrl = $IntegratedPath. 'getperson.php?personID='. $personId. '&tree='. $tree;
         
         $thumbPath = $content->getDefaultMedia($personId)['thumbpath'];  
         $defaultphoto = $photoPath. $thumbPath;

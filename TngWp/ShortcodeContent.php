@@ -121,7 +121,7 @@ class TngWp_ShortcodeContent
     
     }
 
-    /** Restrict Access to tree REMOVE ****/
+       /** Restrict Access to tree REMOVE ****/
     function treeAccess() {
         $configPath = $this->getConfigPath();
         include $configPath;

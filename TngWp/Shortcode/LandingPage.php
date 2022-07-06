@@ -15,11 +15,16 @@ class TngWp_Shortcode_LandingPage extends TngWp_Shortcode_AbstractShortcode
         $requireLogin = $p_content->requireLogin();
         $treeAccess = $p_content->treeAccess();
         $tngUser = $content->getTngUser();
+        $usetId = $tngUser['userID'];
+        $userTree =  $tngUser['mygedcom'];
         $personId = $content->getCurrentPersonId();
         $url = $content->getTngUrl();
 		$photos = $content->getTngPhotoFolder();
 		$photosPath = $url. $photos;
 		$profileImage = $content->getProfileMedia($personId);
+        $genealogy = $content->getTngIntegrationPath();
+        $IntegratedPath = dirname($url). "/". $genealogy. "/";
+        $personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
 		$currentBirthday = $content->getCurrentBirthday();
         $currentmanniversary = $content->getCurrentMAnniversaries();
         $currentdanniversaries = $content->getCurrentDAnniversaries();
@@ -31,6 +36,7 @@ class TngWp_Shortcode_LandingPage extends TngWp_Shortcode_AbstractShortcode
             'birthdays' => $currentBirthday,
             'manniversaries' => $currentmanniversary,
             'danniversaries' => $content->getCurrentDAnniversaries(),
+            'personUrl' => $personUrl,
             'date' => date("l, jS F Y")
         );
 
