@@ -1,5 +1,5 @@
 
-# TNG SHORTCODES CONSTRUCTOR Version 1.0 FOR WORDPRESS
+# TNG SHORTCODES CONSTRUCTOR VERSION 1.0 FOR WORDPRESS
 
 ## License
 The code is licenced under the [MIT licence](http://opensource.org/licenses/MIT)
@@ -20,18 +20,20 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
   - Show Living Data:
   - Show Names for Private:
   - I may implement the following in the next update
-    - Show LDS Data: Current shortcodes do not show LDS data
-    - Restrict access to assigned tree: As I only have one tree, I have not implemented this. Perhaps on next version.
+    - Show LDS Data: Current shortcodes do not show LDS data, as do not have LDS data.
+    - Restrict access to assigned tree. As I only have one tree, I have not implemented this. Perhaps on next version.
 
  - It implements Privacy Credentials for the User
     - Allow to view information for living individuals
     - Allow to view information for private individuals
     - I may implement the following in the next update
       - Allow to view LDS information
-      - Restrict access to specific trees and branches
+      - Restrict access to specific trees and branches.
 
+# Change Log
+    - Current Released Version 1.0
 
-
+# Setup 
 
 # Tested on
 - Wordpress platform: 5.9.3
