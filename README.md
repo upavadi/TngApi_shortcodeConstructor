@@ -44,7 +44,9 @@ The plugin should work with all versions of TNG.
   - __URL to TNG Folder:__ TNG URL is path to TNG (http://www.mysite.com/tng). You may look this up from TNG Admin Setup or config.php ($tngdomain) in TNG folder. 
   - __TNG Photo Folder:__ Name of TNG Photo Folder. Derived from TNG setup.
   - __TNG Integration Path__ Enter TNG folder name here. If you are using Wordpress Integration by Mark Barnes, enter the name of the page you have specified to display TNG pages within Wordpress container. Otherwise enter name of TNG folder. 
-  - __TNG Collection ID for Photo Uploads:__ 		User images are uploaded in to one of TNG folders with the collection name specified by you in the admin set up. Enter the name for the collection you have set up in TNG admin > media. Mine is called “My Uploads”.  
+  - __TNG Collection ID for Photo Uploads:__ 		User images are uploaded in to one of TNG folders with the collection name specified by you in the admin set up. Enter the name for the collection you have set up in TNG admin > media. Mine is called “My Uploads”. 
+
+  __Inmportant Variable is the TNG Root Path. If it can not find the TNG file it will complain, bitterly.__
 
 
 # Tested on
@@ -67,11 +69,37 @@ The plugin should work with all versions of TNG.
 - `TngWp_submitImage` Upload images from Wordpress
 
 # Add Your Own Shortcode
+ - Create a file for your page. (e.g. myShortcode.html.php)
+ - Create a file with the class for the shortcode (e.g. myShortcode.php)
+   
+        class TngWp_Shortcode_MyShortcode extends TngWp_Shortcode_AbstractShortcode
+         {
+          const SHORTCODE = 'TngWp_MyShortcode'; //shortcode name
+          
+           public function show()
+          {
+            // Best place to define your variables here
+           //Array $conext will be available in your page
+            $context = array(        
+           );
+           //This html file will show your page
+       return $this->templates->render('myshortcode.html', $context);
+          }
+        }
+
+    
+ - 
 
 # To Do
 - Assigned Tree: 
 - Shortcode for __Family Page__ similar to TngApi
 - Shortcode widjet for __TNG Person Search__ similar to TngApi
+
+# Patches & contributions
+
+This is very much a project that can evolve so please feel free to fork and submit pull requests.
+
+I would really love to have your feedback, so if you download, let me know. Thanks.
 
 
 
