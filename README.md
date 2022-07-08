@@ -83,12 +83,13 @@ The plugin should work with all versions of TNG.
             $context = array(        
            );
            //This html file will show your page
-       return $this->templates->render('myshortcode.html', $context);
+           return $this->templates->render('myshortcode.html', $context);
           }
         }
-
-    
- - 
+  
+ - Add Short code class in the plugin file tng-shortode-constructop.php
+ 
+        $content->addShortcode(new TngWp_Shortcode_MyShortcode());
 
 # To Do
 - Assigned Tree: 
