@@ -4,7 +4,7 @@
 ## License
 The code is licenced under the [MIT licence](http://opensource.org/licenses/MIT)
 - _This allows you to deal with the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so._
-- All I ask is that you share your changes, perhaps by creating a  __Github Pull Request__.
+- All I ask is that you share your changes, perhaps by creating a  __Github Fork Request__.
 
 ## Introduction
 __TNG Shortcode Constructor__ is a stripped down version of The [TngApi V3.3.2](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip) plugin for Wordpress. 
@@ -31,7 +31,7 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict access to specific trees and branches.
 
 # Change Log
-    - Current Released Version 1.0
+     Current Released Version 1.0
 
 # Setup 
 
