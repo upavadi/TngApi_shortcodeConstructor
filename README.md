@@ -12,9 +12,9 @@ The code is licenced under the [MIT licence](http://opensource.org/licenses/MIT)
 - All I ask is that you share your changes, perhaps by creating a  __Github Fork Request__.
 
 ## Introduction
-__TNG Shortcode Constructor__ is a stripped down version of The [TngApi V3.3.2](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip) plugin for Wordpress. 
+__TNG Shortcode Constructor__ is a stripped down version of The [TngApi V3.3](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip) plugin for Wordpress. 
 
-[TngApi V3.3.2](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip), a stand-alone plugin, was published in 2015. It integrates smoothly with TNG ( The Next Generation of Genealogy Sitebuilding ) to display genealogy data in Wordpress pages. 
+[TngApi V3.3](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip), a stand-alone plugin, was published in 2015. It integrates smoothly with [TNG (The Next Generation of Genealogy Sitebuilding)](http://www.tngsitebuilding.com/) to display genealogy data in Wordpress pages. 
 It's main attraction was the ability of the user to add / amend family data and ability of the administrator to perform one-click transfer of this data to tng database. With changes to MySQL and TNG database structure I have found it virtually imposible to support this feature.
 
 I understand that, now, a TNG mod, the [Family Group Worksheet ](https://tng.lythgoes.net/wiki/index.php/Family_Group_Worksheet),has the facility for administrators to merge data in to TNG database.

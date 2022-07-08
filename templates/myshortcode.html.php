@@ -1,9 +1,15 @@
 <?php
+
 /** Sample Text
 * How to add shortcode FOR THIS PAGE to TNG Shortcode Constructor
-**/
-echo "PHP Version = ". (phpversion()); //variable
+************/
+echo "PHP Version = ". (phpversion());
+/**
+ * Following variables are defined in myShortcode.php
+ *****/
+echo ", Require Login = ". $requireLogin. ", URL = ". $url. ", integratedPath = ". $integratedPath;
 ?>
+
 <div>
 <h1>How this shortcode was added to the tng-shortcode-constructor</h1>
 <strong>Shortcode is [TngWp_MyShortcode]</strong>
