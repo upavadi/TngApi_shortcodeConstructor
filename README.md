@@ -49,8 +49,8 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
 
 - `TngWp_birthdays` List birthdays for the selected month.
 - `TngWp_danniversaries` List death anniversaries for the selected month.
-- `TngWp_gone` Gone But Not Forgotten. 
-- `TngWp_LandingPage`
+- `TngWp_gone` (Gone But Not Forgotten). Gives birth dates and deat hdates for yesterday, today and tomorrow. It is encapsulated in a DIV and it may be possible to include that in your content.
+- `TngWp_LandingPage` This is similar to 'TngWp_gone' but has user name, general birthdays and marriage anniversaries, added. 
 - `TngWp_manniversaries`
 - `TngWp_MyShortcode`
 - `TngWp_submitImage`
