@@ -13,7 +13,7 @@ __TNG Shortcode Constructor__ is a stripped down version of The [TngApi V3.3.2](
 [TngApi V3.3.2](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip), a stand-alone plugin, was published in 2015. It integrates smoothly with TNG ( The Next Generation of Genealogy Sitebuilding ) to display genealogy data in Wordpress pages. 
 It's main attraction was the ability of the user to add / amend family data and ability of the administrator to perform one-click transfer of this data to tng database. With changes to MySQL and TNG database structure I have found it virtually imposible to support this feature.
 
-I understand that now, a TNG mod, the [Family Group Worksheet ](https://tng.lythgoes.net/wiki/index.php/Family_Group_Worksheet),has the facility for administrators to merge data in to TNG database.
+I understand that, now, a TNG mod, the [Family Group Worksheet ](https://tng.lythgoes.net/wiki/index.php/Family_Group_Worksheet),has the facility for administrators to merge data in to TNG database.
 
 Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, except update TNG data.
 - It implements Privacy Credentials in the General SetUp>Privacy
@@ -34,7 +34,18 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
 # Change Log
      Current Released Version 1.0
 
-# Setup 
+# Setup
+The plugin should work with all versions of TNG. 
+- It obtains it's credentials from TNG setup. 
+- It shares the variables with TngApi
+- Settings are in Wordpress Admin Settings
+- The variables are
+  - __TNG Root Path:__ TNG Root Path is absolute path to TNG. You may look this up from TNG Admin Setup or config.php ($rootpath) in TNG folder.
+  - __URL to TNG Folder:__ TNG URL is path to TNG (http://www.mysite.com/tng). You may look this up from TNG Admin Setup or config.php ($tngdomain) in TNG folder. 
+  - __TNG Photo Folder:__ Name of TNG Photo Folder. Derived from TNG setup.
+  - __TNG Integration Path__ Enter TNG folder name here. If you are using Wordpress Integration by Mark Barnes, enter the name of the page you have specified to display TNG pages within Wordpress container. Otherwise enter name of TNG folder. 
+  - __TNG Collection ID for Photo Uploads:__ 		User images are uploaded in to one of TNG folders with the collection name specified by you in the admin set up. Enter the name for the collection you have set up in TNG admin > media. Mine is called “My Uploads”.  
+
 
 # Tested on
 - Wordpress platform: 5.9.3
@@ -50,10 +61,12 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
 - `TngWp_birthdays` List birthdays for the selected month.
 - `TngWp_danniversaries` List death anniversaries for the selected month.
 - `TngWp_gone` (Gone But Not Forgotten). Gives birth dates and deat hdates for yesterday, today and tomorrow. It is encapsulated in a DIV and it may be possible to include that in your content.
-- `TngWp_LandingPage` This is similar to 'TngWp_gone' but has user name, general birthdays and marriage anniversaries, added. 
-- `TngWp_manniversaries`
-- `TngWp_MyShortcode`
-- `TngWp_submitImage`
+- `TngWp_LandingPage` This is similar to 'TngWp_gone' but has user name, general birthdays and marriage anniversaries and death anniversaries added. 
+- `TngWp_manniversaries` List marriage anniversaries for the selected month.
+- `TngWp_MyShortcode` Template for adding your own shortcode
+- `TngWp_submitImage` Upload images from Wordpress
+
+# Add Your Own Shortcode
 
 # To Do
 - Assigned Tree: 
