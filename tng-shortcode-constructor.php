@@ -89,17 +89,3 @@ if (file_exists($tngPath)) {
 		wp_enqueue_style('register-tngapi_bootstrap');
 	}
 }
-
-// function shortcode_settings() {
-// 	//add_option( 'shortcode_constructor', 'This is my option value.');
-// 	register_setting( 'Options', 'shortcode_constructor');
-//  }
- //add_action( 'admin_init', 'shortcode_settings' );
-
-/******************************************* */
-
-// function myplugin_register_options_page() {
-// 	add_options_page('Page Title', 'Shortcode Constructor', 'manage_options', 'myplugin', 'shortcode_options_page');
-//   }
- // add_action('admin_menu', 'myplugin_register_options_page');
-?>

@@ -1,8 +1,10 @@
 
-## TNG SHORTCODES CONSTRUCTOR V 1.0 FOR WORDPRESS
+## TNG SHORTCODE CONSTRUCTOR V 1.0 FOR WORDPRESS
 
 ## Download
-You may download latest version 1.0 [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/archive/refs/tags/V1.0.zip)
+You may download latest version, V 1.0, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/archive/refs/tags/V1.0.zip)
+
+Repository for the TNG Shortcode Constructor is [here](https://github.com/upavadi/TngApi_shortcodeConstructor)
 
 
 ## License
@@ -15,62 +17,63 @@ The code is licenced under the [MIT licence](http://opensource.org/licenses/MIT)
 __TNG Shortcode Constructor__ is a stripped down version of The [TngApi V3.3](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip) plugin for Wordpress. 
 
 [TngApi V3.3](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip), a stand-alone plugin, was published in 2015. It integrates smoothly with [TNG (The Next Generation of Genealogy Sitebuilding)](http://www.tngsitebuilding.com/) to display genealogy data in Wordpress pages. 
-It's main attraction was the ability of the user to add / amend family data and ability of the administrator to perform one-click transfer of this data to tng database. With changes to MySQL and TNG database structure I have found it virtually imposible to support this feature.
+It's main attraction was the ability of the user to add / amend family data and ability of the administrator to perform one-click transfer of this data to tng database. With changes to MySQL and TNG database structure, I have found it virtually imposible to support this feature.
 
-I understand that, now, a TNG mod, the [Family Group Worksheet ](https://tng.lythgoes.net/wiki/index.php/Family_Group_Worksheet),has the facility for administrators to merge data in to TNG database.
+I understand that, now, a TNG mod, the [Family Group Worksheet ](https://tng.lythgoes.net/wiki/index.php/Family_Group_Worksheet), has the facility for administrators to merge data in to TNG database.
 
 Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, except update TNG data.
-- It implements Privacy Credentials in the General SetUp>Privacy
+- It implements Privacy Credentials in the TNG General SetUp>Privacy
   - Require Login:
   - Show Living Data:
+  - Show Names for Living:
   - Show Names for Private:
   - I may implement the following in the next update
-    - Show LDS Data: Current shortcodes do not show LDS data, as do not have LDS data.
+    - Show LDS Data: Current shortcodes do not show LDS data, as do not have LDS data my database.
     - Restrict access to assigned tree. As I only have one tree, I have not implemented this. Perhaps on next version.
 
  - It implements Privacy Credentials for the User
-    - Allow to view information for living individuals
-    - Allow to view information for private individuals
-    - I may implement the following in the next update
-      - Allow to view LDS information
-      - Restrict access to specific trees and branches.
+    - Allow User to view information for living individuals
+    - Allow User to view information for private individuals
+  - I may implement the following in the next update
+      - Allow User to view LDS information
+      - Restrict User access to specific trees and branches.
 
 # Change Log
-     Current Released Version 1.0
+      Released Version 1.0
 
 # Setup
 The plugin should work with all versions of TNG. 
-- It obtains it's credentials from TNG setup. 
-- It shares the variables with TngApi
-- Settings are in Wordpress Admin Settings
+- Plugin obtains it's credentials from TNG setup. 
+- Plugin shares it's variables with TngApi
+- Plugin Settings are in Wordpress Admin>Settings
 - The variables are
-  - __TNG Root Path:__ TNG Root Path is absolute path to TNG. You may look this up from TNG Admin Setup or config.php ($rootpath) in TNG folder.
+  - __TNG Root Path:__ TNG Root Path is the absolute path to TNG. You may look this up from TNG Admin Setup or config.php ($rootpath) in TNG folder.
   - __URL to TNG Folder:__ TNG URL is path to TNG (http://www.mysite.com/tng). You may look this up from TNG Admin Setup or config.php ($tngdomain) in TNG folder. 
   - __TNG Photo Folder:__ Name of TNG Photo Folder. Derived from TNG setup.
-  - __TNG Integration Path__ Enter TNG folder name here. If you are using Wordpress Integration by Mark Barnes, enter the name of the page you have specified to display TNG pages within Wordpress container. Otherwise enter name of TNG folder. 
-  - __TNG Collection ID for Photo Uploads:__ 		User images are uploaded in to one of TNG folders with the collection name specified by you in the admin set up. Enter the name for the collection you have set up in TNG admin > media. Mine is called “My Uploads”. 
+  - __TNG Integration Path__ Enter TNG folder name here. If you are using Wordpress Integration by Mark Barnes, enter the name of the page you have specified to display TNG pages within Wordpress container. __Otherwise enter name of TNG folder__. 
+  - __TNG Collection ID for Photo Uploads:__ 		User images are uploaded in to one of TNG folders with the collection name specified by you in the admin set up. Enter the name for the collection you have set up in TNG admin > media. _Mine is called “My Uploads”_. 
 
-  __Inmportant Variable is the TNG Root Path. If it can not find the TNG file it will complain, bitterly.__
+  __Important Variable is the TNG Root Path. If it can not find the TNG file it will complain, bitterly.__
 
 
 # Tested on
 - Wordpress platform: 5.9.3
-- PHP version 8.01
+- PHP version 7.xx and 8.01
 - WP-TNG Integration
   - Mike Barnes Method using a [Stripped Down tng.php]( https://github.com/upavadi/TngPluginStripped/blob/master/tng.php) 
    - [Kloosterman method](https://www.kloosterman.be/info/tng-wp-avada/)
 - Alongside my plugins, [TngApi V3.3.2](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip) and [tng-wp-login v3.1.3.beta](https://github.com/upavadi/tng-wp-login/releases/tag/3.1.3.beta) 
 
 
-# Shortcodes
+# Shortcodes In This Release
 
 - `TngWp_birthdays` List birthdays for the selected month.
 - `TngWp_danniversaries` List death anniversaries for the selected month.
-- `TngWp_gone` (Gone But Not Forgotten). Gives birth dates and deat hdates for yesterday, today and tomorrow. It is encapsulated in a DIV and it may be possible to include that in your content.
-- `TngWp_LandingPage` This is similar to 'TngWp_gone' but has user name, general birthdays and marriage anniversaries and death anniversaries added. 
-- `TngWp_manniversaries` List marriage anniversaries for the selected month.
-- `TngWp_MyShortcode` Template for adding your own shortcode
-- `TngWp_submitImage` Upload images from Wordpress
+- `TngWp_gone` (Gone But Not Forgotten). Gives birth dates and deat hdates for yesterday, today and tomorrow. It is encapsulated in a DIV and it may be possible to include that in your content. ( I have used similar in [my Home Page](http://www.upavadi.net/))
+- `TngWp_LandingPage` This is similar to 'TngWp_gone' but has user name, birthdays, marriage anniversaries and death anniversaries added. 
+- `TngWp_manniversaries` List of marriage anniversaries for the selected month.
+- `TngWp_MyShortcode` __Template for adding your own shortcode__
+- `TngWp_submitImage` Upload images from Wordpress. Image will be stored in a TNG Media Collection specified by you.
 
 # Add Your Own Shortcode
  - Create a file for your page. (e.g. myShortcode.html.php)
@@ -78,14 +81,14 @@ The plugin should work with all versions of TNG.
    
         class TngWp_Shortcode_MyShortcode extends TngWp_Shortcode_AbstractShortcode
          {
-          const SHORTCODE = 'TngWp_MyShortcode'; //shortcode name
+          const SHORTCODE = 'TngWp_MyShortcode'; //This is your shortcode name
           
            public function show()
           {
-            // Best place to define your variables here
-           //Array $conext will be available in your page
+            // This may best place to define general variables.
+            //Array $conext will be available in your page.
             $context = array(        
-           );
+            );
            //This html file will show your page
            return $this->templates->render('myshortcode.html', $context);
           }
@@ -94,9 +97,11 @@ The plugin should work with all versions of TNG.
  - Add Short code class in the plugin file tng-shortode-constructop.php
 
         $content->addShortcode(new TngWp_Shortcode_MyShortcode());
-
+    
+- Hopefully, that Should work
 # To Do
-- Assigned Tree: 
+- Add Privacy Credentials for Assigned Tree
+- Add Privacy Credentials for LDS Data 
 - Shortcode for __Family Page__ similar to TngApi
 - Shortcode widjet for __TNG Person Search__ similar to TngApi
 
