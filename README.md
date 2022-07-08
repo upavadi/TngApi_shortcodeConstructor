@@ -1,5 +1,9 @@
 
-# TNG SHORTCODES CONSTRUCTOR VERSION 1.0 FOR WORDPRESS
+## TNG SHORTCODES CONSTRUCTOR V 1.0 FOR WORDPRESS
+
+## Download
+You may download latest version 1.0 [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/archive/refs/tags/V1.0.zip)
+
 
 ## License
 The code is licenced under the [MIT licence](http://opensource.org/licenses/MIT)
@@ -88,7 +92,7 @@ The plugin should work with all versions of TNG.
         }
   
  - Add Short code class in the plugin file tng-shortode-constructop.php
- 
+
         $content->addShortcode(new TngWp_Shortcode_MyShortcode());
 
 # To Do
