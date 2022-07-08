@@ -6,10 +6,7 @@ class TngWp_Shortcode_MyShortcode extends TngWp_Shortcode_AbstractShortcode
     
     public function show()
     {
-      $this->content->init();  
-      
-      
-      
+      $this->content->init();
         $content = array(); // shortcodeContent array
         $p_content = array(); // privacyContent array
         $content = TngWp_ShortcodeContent::instance(); 
@@ -18,15 +15,18 @@ class TngWp_Shortcode_MyShortcode extends TngWp_Shortcode_AbstractShortcode
         $user_content = $p_content->userPrivacy(); //User privacy from PrivacyContent
                 
         $requireLogin = $tng_content['tng_login'];
-        
+        $url = $content->getTngUrl();
+        $genealogy = $content->getTngIntegrationPath();
+        $integratedPath = dirname($url). "/". $genealogy;        
         //Sample array for html file.
         $context = array(
-        'requireLogin' => $requireLogin  
+        'requireLogin' => $requireLogin,
+        'url' => $url,
+        'tng_content' => $tng_content,
+        'integratedPath' => $integratedPath 
        );
-       $url = $content->getTngUrl();
-       $genealogy = $content->getTngIntegrationPath();
-       $IntegratedPath = dirname($url). "/". $genealogy;
-       var_dump($IntegratedPath);
+
+
        //This html file to show
        return $this->templates->render('myshortcode.html', $context);
     }
