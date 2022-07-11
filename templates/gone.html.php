@@ -32,7 +32,7 @@
 <?php	
     $content = array(); // shortcodeContent array
     $content = TngWp_ShortcodeContent::instance(); 
-
+echo "Æ, Ø, Å or Swedish Ä, Ö";
 
     $genealogy = $content->getTngIntegrationPath();
 	$url = $content->getTngUrl();
@@ -53,13 +53,12 @@
         $DeathAge = $goneday['DeathAge'];
         $DeathYears = $goneday['DeathYears'];
         $personUrl = $IntegratedPath. 'getperson.php?personID='. $personId. '&tree='. $tree;
+        $defaultphoto = "";
         
         $thumbPath = $content->getDefaultMedia($personId);
-        if (isset($thumbPath['thumbpath']))
-        $defaultphoto = $photoPath. $thumbPath['thumbpath'];
+        if (isset($thumbPath['thumbpath'])) $defaultphoto = $photoPath. $thumbPath['thumbpath'];
         if ($thumbPath == null && $sex == 'M') $defaultphoto = $generic_M;
         if ($thumbPath == null && $sex == 'F') $defaultphoto = $generic_F;
-        
 
         /*** if no dates **** */
         if ($goneday['birthdate'] == "")
