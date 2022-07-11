@@ -32,7 +32,7 @@
 <?php	
     $content = array(); // shortcodeContent array
     $content = TngWp_ShortcodeContent::instance(); 
-echo "Æ, Ø, Å or Swedish Ä, Ö";
+
 
     $genealogy = $content->getTngIntegrationPath();
 	$url = $content->getTngUrl();
