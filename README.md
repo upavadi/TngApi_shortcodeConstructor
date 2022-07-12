@@ -39,7 +39,13 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-      Released Version 1.0
+- 1.02
+  - Special characters (eg Norwegian Æ, Ø, Å ) from TNG database showing up as ? or similar. A charset to UTF applied to all TNG tables in 'shortcodeContent.php'
+- 1.01
+  -Incorrect file name /TngWp/shortcodes/gone.php. Changed to /TngWp/shortcodes/Gone.php.
+  - Omitted to add /templates in gone.html.php. Fixed
+  - Undeclared variable when using PHP 8.01 in /templates in gone.html.php Fixed
+- Released Version 1.0
 
 # Setup
 The plugin should work with all versions of TNG. 
