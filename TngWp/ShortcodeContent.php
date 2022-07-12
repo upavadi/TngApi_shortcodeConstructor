@@ -160,6 +160,7 @@ class TngWp_ShortcodeContent
                 return;
                 } 
         // mysqli_select_db($db, $dbName);
+        $db->set_charset("utf8"); /*************************DECLARE THIS TO MAKE SURE SPECIAL CHARACTERS (Æ, Ø, Å or Swedish Ä, Ö) ARE DISPLAYED.***************** */
             $this->db = $db; // added
             $this->initTables(); 
 
