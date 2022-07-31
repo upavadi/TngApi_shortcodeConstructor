@@ -50,4 +50,3 @@ echo ", Require Login = ". $requireLogin. ", URL = ". $url. ", integratedPath = 
 <li>$genealogy = $content->getTngIntegrationPath();</li>
 <li>$IntegratedPath = dirname($url). "/". $genealogy;</li>
 </div>
-
