@@ -3,7 +3,6 @@
  * Gone but Not Forgoytten
 * Dedeased only . No Credential checks
 **/
-
 ?>
 <head>
 <meta charset="utf-8">
@@ -33,14 +32,11 @@
     $content = array(); // shortcodeContent array
     $content = TngWp_ShortcodeContent::instance(); 
 
-
     $genealogy = $content->getTngIntegrationPath();
 	$url = $content->getTngUrl();
 	$Directory = basename($url );
 	$IntegratedPath = dirname($url). "/". $genealogy. "/";
-
-
-    //var_dump($gonedays);
+    
     foreach ($gonedays as $goneday):
         $personId = $goneday['personid'];
         $tree = $goneday['gedcom'];  
@@ -85,9 +81,6 @@
 		} else {
 			$deathClass = "";
 	}
-
-
-
 ?>
         <tr>
             <td class="born-article-table" ><a href="<?php echo $personUrl; ?>">
@@ -103,16 +96,7 @@
 			<td class="born-article-table" style="text-align: center;"><?php echo $BirthAge; ?></td>
 			<td class="born-article-table" style="text-align: center;"><?php echo $DeathYears; ?></td>
         </tr>
-
-
-
-
-
 <?php
-
-
-
-
     endforeach; 
 ?>
 </table>
