@@ -2,7 +2,7 @@
 ## TNG SHORTCODE CONSTRUCTOR FOR WORDPRESS
 
 ## Download
-You may download latest version, V 1.02, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/releases/tag/V1.02)
+You may download latest version, V 1.02, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/releases/latest)
 
 Repository for the TNG Shortcode Constructor is [here](https://github.com/upavadi/TngApi_shortcodeConstructor)
 
