@@ -586,6 +586,7 @@ public function getMarriageAnniversaries($month, $tree = null)
 {
     $user = $this->getTngUser();
     $gedcom = $user['gedcom'];
+    if (isset( $user['gedcom'])) $gedcom = $user['gedcom'];
     // If we are searching, enter $tree value
     if ($tree) {
         $gedcom = $tree;
@@ -601,16 +602,21 @@ h.private AS private1,
 h.personid AS personid1,
 h.firstname AS firstname1,
 h.lastname AS lastname1,
+h.living AS living1,
+h.deathdate AS deathdate1,
 w.personid AS personid2,
 w.firstname AS firstname2,
 w.lastname AS lastname2,
 w.private AS private2,
+w.living AS living2,
+w.deathdate AS deathdate2,
 w.gedcom,
 f.gedcom,
 f.living,
 f.private,
 f.familyID,
 f.marrdate,
+f.marrdatetr,
 f.marrplace,
 f.divdate,
 Year(Now()) - Year(marrdatetr) AS Years
