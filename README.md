@@ -39,8 +39,17 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
+- Current version 1.03
+  - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
+    - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living. I will remove that in final version.
+  - Added new file  __ManniversariesDeceased.php__ in TngWp/Shortcode folder. This file defines the new class (line 8) and the name of the shortcode (line 10).
+  - Added new file  __manniversaries-deceased.html.php__ in the templates folder. This is the HTML file which deals with the page display and individual calculations. 
+  - File __tng-shortcode-constructor.php__: Updated to register the new shortcode
+  class.
+  - File __ShortcodeContent.php__: modified the SQL to include ‘deathdates’ in the result.
+
 - 1.02
-  - Special characters (eg Norwegian Æ, Ø, Å ) from TNG database showing up as ? or similar. A charset to UTF applied to all TNG tables in 'shortcodeContent.php'
+  - Special characters (eg Norwegian Æ, Ø, Å ) from TNG database showing up as ? or similar. A charset to UTF applied to all TNG tables in 'shortcodeContent.php' 
 - 1.01
   -Incorrect file name /TngWp/shortcodes/gone.php. Changed to /TngWp/shortcodes/Gone.php.
   - Omitted to add /templates in gone.html.php. Fixed
@@ -75,7 +84,7 @@ The plugin should work with all versions of TNG.
 
 - `TngWp_birthdays` List birthdays for the selected month.
 - `TngWp_danniversaries` List death anniversaries for the selected month.
-- `TngWp_gone` (Gone But Not Forgotten). Gives birth dates and deat hdates for yesterday, today and tomorrow. It is encapsulated in a DIV and it may be possible to include that in your content. ( I have used similar in [my Home Page](http://www.upavadi.net/))
+- `TngWp_gone` (Gone But Not Forgotten). Gives birth dates and death dates for yesterday, today and tomorrow. It is encapsulated in a DIV and it may be possible to include that in your content. ( I have used similar in [my Home Page](http://www.upavadi.net/))
 - `TngWp_LandingPage` This is similar to 'TngWp_gone' but has user name, birthdays, marriage anniversaries and death anniversaries added. 
 - `TngWp_manniversaries` List of marriage anniversaries for the selected month.
 - `TngWp_MyShortcode` __Template for adding your own shortcode__
