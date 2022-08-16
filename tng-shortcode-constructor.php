@@ -4,7 +4,7 @@
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
- * Version: 1.02 under developement
+ * Version: 1.03 under developement
  *         
  * Author: Mahesh Upadhyaya. Based on TngApi V3.3x by Neel and Mahesh Upadhyaya
  * Author URI: http://www.TngWp.net/
@@ -73,6 +73,7 @@ if (file_exists($tngPath)) {
 	$content->addShortcode(new TngWp_Shortcode_Birthdays());
 	$content->addShortcode(new TngWp_Shortcode_Danniversaries());
 	$content->addShortcode(new TngWp_Shortcode_Manniversaries());
+	$content->addShortcode(new TngWp_Shortcode_ManniversariesDeceased());
 	$content->addShortcode(new TngWp_Shortcode_LandingPage());
 	$content->addShortcode(new TngWp_Shortcode_Gone());
 	//var_dump(get_declared_classes());
