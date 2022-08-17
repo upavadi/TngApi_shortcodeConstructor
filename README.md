@@ -48,7 +48,7 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
   class.
   - File __ShortcodeContent.php__: modified the SQL to include ‘deathdates’ in the result.
 
-- 1.02
+- 1.02 Released version
   - Special characters (eg Norwegian Æ, Ø, Å ) from TNG database showing up as ? or similar. A charset to UTF applied to all TNG tables in 'shortcodeContent.php' 
 - 1.01
   -Incorrect file name /TngWp/shortcodes/gone.php. Changed to /TngWp/shortcodes/Gone.php.
