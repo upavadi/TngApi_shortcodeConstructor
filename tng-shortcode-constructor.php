@@ -4,14 +4,12 @@
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
- * Version: 1.03 under developement
+ * Version: 1.03 dev (under developement)
  *         
  * Author: Mahesh Upadhyaya. Based on TngApi V3.3x by Neel and Mahesh Upadhyaya
- * Author URI: http://www.TngWp.net/
+ * Author URI: http://trial.upavadi.net/
  * License: MIT Licence http://opensource.org/licenses/MIT
  *
- * URL to the plugin Directory 	
- * <?php echo plugins_url('subdirectory/file', dirname(__FILE__)); ?>
  *
  */
 require_once __DIR__ . '/autoload.php';
@@ -20,6 +18,7 @@ require_once __DIR__ . '/admin_set_paths.php';
 static $tngPath;
 
 $tngPath = esc_attr(get_option('tng-api-tng-path') . "config.php");
+
 if (!file_exists($tngPath)) {
 	echo "TNG Path not found";
 	add_action('admin_notices', 'findTngPath');
