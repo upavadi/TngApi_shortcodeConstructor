@@ -39,7 +39,7 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- Current version 1.03 Dev
+- Current version 1.03 dev (under developement)
   - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
     - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.
   - Added new file  __ManniversariesDeceased.php__ in TngWp/Shortcode folder. This file defines the new class (line 8) and the name of the shortcode (line 10).
