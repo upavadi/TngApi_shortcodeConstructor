@@ -18,12 +18,14 @@ function short_code_submenu() {
 /***  sub menu page ****/
 function shortcode_options_page()
 {
+	static $author_id;
 
 	$tng_root_path = esc_attr(get_option('tng-api-tng-path'));
 	$tng_url = esc_attr(get_option('tng-api-tng-url'));
 	$tng_photo_folder = esc_attr(get_option('tng-api-tng-photo-folder'));
 	$tng_integration_path = esc_attr(get_option('tng-base-tng-path'));
 	$tng_collection_id = esc_attr(get_option('tng-api-tng-photo-upload'));
+	$tng_name_search = esc_attr(get_option('tng-api-tng-name-search'));
 	$success = "";
 
 	if (isset(($_POST['tng_root_path']))) {
@@ -33,12 +35,14 @@ function shortcode_options_page()
 		$tng_photo_folder = $_POST['tng_photo_folder'];
 		$tng_integration_path = $_POST['tng_integration_path'];
 		$tng_collection_id = $_POST['tng_collection_id'];
+		$tng_name_search = $_POST['tng_name_search'];
 	
 		update_option('tng-api-tng-path', $tng_root_path);
 		update_option('tng-api-tng-url', $tng_url);
 		update_option('tng-api-tng-photo-folder', $tng_photo_folder);
 		update_option('tng-base-tng-path', $tng_integration_path);
-		update_option('ng-api-tng-photo-upload', $tng_collection_id);
+		update_option('tng-api-tng-photo-upload', $tng_collection_id);
+		update_option('tng-api-tng-name-search', $tng_name_search);
 		$success = "Changes Saved";
 	}
 	?>
@@ -109,6 +113,22 @@ function shortcode_options_page()
 				User images are uploaded in to one of TNG folders with the collection name specified by you in the admin set up. Enter the name for the collection you have set up in TNG admin > media. Mine is called “My Uploads”. 
 				</td>
 			</tr>
+			<tr>
+			<tr>
+			<td> <b>TNG Search Widget</b></td>
+			<td>requires a Wordpress page to display results.</td>
+			<td>Enter unique page name (slug). Leave blank if you are not using the TNG widget</td>
+			</tr>	
+				<td>
+				WP Page for Search Widget: 	
+				</td>
+				<td>
+				<input type="text" size="30" name="tng_name_search" value= '<?php echo $tng_name_search; ?>'>	
+				</td>
+				<td>
+				Enter name (slug) for Wordpress page. Avoid using 'search' if you are using, or have used TngApi plugin.
+				</td>
+			</tr>
 
 		</table>
 	</div>
@@ -120,9 +140,16 @@ function shortcode_options_page()
 	</form>
 </div>
 <?php
-	
-
-
-
-} 
+ var_dump($_POST);
+ if(($tng_name_search))
 /***************** */
+//function insert_tng_search_page($tng_name_search) {
+	// Insert tng Search Page
+	$slug = $tng_name_search;
+	$post_content = '[TngWp_search]';
+	$author_id = 1;
+	$title = 'TNG Name Search';
+	if(isset($slug)) echo "Slug is set";
+	insert_page($slug, $post_content, $author_id, $title);
+
+}
