@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: TngApiShortcodeConstructor
+ * Plugin Name: 1-TngApiShortcodeConstructor Current
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
@@ -43,8 +43,7 @@ if (!ISSET($_POST['wp_tng_path'])) {
 	echo $success;	
 	
 }
-//var_dump($_POST['wp_tng_path']);
-var_dump($rootPath);
+
 ?>
 	<form action='' method="post">
 		<div>
@@ -75,12 +74,13 @@ if (file_exists($tngPath)) {
 	$content->addShortcode(new TngWp_Shortcode_ManniversariesDeceased());
 	$content->addShortcode(new TngWp_Shortcode_LandingPage());
 	$content->addShortcode(new TngWp_Shortcode_Gone());
-	//var_dump(get_declared_classes());
-
-
+	$content->addShortcode(new TngWp_Shortcode_TngSearch());
+	$tngSearch = new TngWp_Widget_TngSearch;
+	
 	add_action('init', array($content, 'initVariables'));
 	add_action('init', array($content, 'initPlugin'), 1);
 	add_action('wp_enqueue_scripts', 'add_TngWp_stylesheets');
+	add_action('widgets_init', array($tngSearch, 'init'));
 	function add_TngWp_stylesheets()
 	{
 		wp_register_style('register-tngapi_TngWp', plugins_url('css/TngWp.css', __FILE__));
