@@ -13,6 +13,7 @@ class TngWp_ShortcodeContent
 
     /**
      * @var TngWp_Shortcode_AbstractShortcode[]
+     * 
      */
     protected $shortcodes = array();
     protected $domain;
@@ -795,6 +796,58 @@ while ($row = $result->fetch_assoc()) {
 return $rows;
 
 }
+
+/****** Tng Search Widget **************** */
+public function searchPerson($searchFirstName, $searchLastName)
+{
+    $wheres = array();
+    if ($searchFirstName) {
+        $wheres[] = "firstname LIKE '%{$searchFirstName}%'";
+    }
+    if ($searchLastName) {
+        $wheres[] = "lastname LIKE '{$searchLastName}%'";
+    }
+// echo $user; 
+    $rows = array();
+    $where = null;
+    if (count($wheres)) {
+        $where = 'WHERE ' . implode(' AND ', $wheres);
+    }
+
+    $user = $this->getTngUser();
+    $gedcom = $user['gedcom'];
+    if ($gedcom) {
+        if (!$where) {
+            $where = ' WHERE ';
+        } else {
+            $where .= ' AND ';
+        }
+        $where .= ' gedcom = "' . $gedcom . '"';
+    }
+
+    $sql = <<<SQL
+SELECT *
+FROM {$this->tables['people_table']}
+{$where}
+ORDER BY firstname, lastname
+LIMIT 100
+SQL;
+
+    $result = $this->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+        $userPrivate = $user['allow_private'];
+        $searchPrivate = $row['private'];
+        if ($searchPrivate > $userPrivate) {
+            //$row['firstname'] = 'Private:';
+            //$row['lastname'] = ' Details withheld';
+
+        }
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
 
 
 
