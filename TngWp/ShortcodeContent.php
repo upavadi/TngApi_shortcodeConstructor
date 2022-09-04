@@ -13,6 +13,7 @@ class TngWp_ShortcodeContent
 
     /**
      * @var TngWp_Shortcode_AbstractShortcode[]
+     * @var TngWp_Widget_TngSearch[]
      * 
      */
     protected $shortcodes = array();
