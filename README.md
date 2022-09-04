@@ -39,7 +39,10 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- Current version 1.03 dev (under developement)
+- Current version 1.04 dev (under developement - process of developing and testing Search Widget)
+  - Added widget, `TngWp_search`which searches names in TNG database. Now in the process of testing it.
+    - The widget requires a Wordpress page to display search results. To create the page, navigate to Settings>TNG Shortcodes and enter a page name (slug). A Wordpress page will be created when changes are saved.
+
   - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
     - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.
   - Added new file  __ManniversariesDeceased.php__ in TngWp/Shortcode folder. This file defines the new class (line 8) and the name of the shortcode (line 10).
