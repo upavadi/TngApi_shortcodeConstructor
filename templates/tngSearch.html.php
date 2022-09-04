@@ -10,11 +10,10 @@ $result = array();
 $firstName = "";
 $lastName = "";
 $tree ="";
-//$context = Upavadi_TngContent::instance()->init();
 $content = TngWp_ShortcodeContent::instance(); 
-// $user = $tngcontent->getTngUser(); 
-// $usertree = $user['gedcom'];
-// $allowAdmin = $user['allow_private'];
+$privacycontent = TngWp_PrivacyContent::instance()->init();
+$privacy = $privacycontent->doPrivacy($personId);
+$personUrl = $integrationPath;
 ?>
 <form style="display: inline-block;" method="get">
 	<label for="search-firstname">First Name: <input type="text" value="<?php echo $firstName; ?>" name="firstName" id="search-firstname"></label>
@@ -28,7 +27,6 @@ if (!count($results)): ?>
 <?php else: ?>
 <div class="container">
 <table class="table table-bordered">
-
 	<tr>
 			<td class="tdback col-md-2 col-sm-2 col-xs-2">Name</th>
 			<td class="tdback col-lg-1 col-md-1 col-sm-1 col-xs-1">Birth Date</th>
@@ -36,42 +34,40 @@ if (!count($results)): ?>
 			if ($usertree == '') { ?>
 			<td class="tdback col-lg-1 col-md-1 col-sm-1 col-xs-1">Tree</th>
 			
-			<?php } ?>
-			
+			<?php } ?>			
 	</tr>
 
 <tbody>
 	<?php
 
 	foreach($results as $result): 
-	if (isset($result)){
+		
+		$privacy = $privacycontent->doPrivacy($personId);
+	if (($result['private'] == 0) ){ 
+
+
 		$personId = $result['personID'];
+		$allow_living = $privacycontent->doLiving($personId); 
 		$parentId = $result['famc'];
 		$tree = $result['gedcom'];
-		$firstname = $result['firstname'];
-		$lastname = $result['lastname'];
-var_dump($context);
+		$firstname = $allow_living['firstname'];
+		$lastname = $allow_living['lastname'];
+		$birthdate = $allow_living['birthdate'];
 		$families = $content->getFamily($personId, $tree, null);
 		$parents = $content->getFamilyById($parentId, $tree = null);
 		$parents = $content->getFamilyById($parentId, $tree = null); 
-		$personPrivacy = $result['private'];
-		$familyPrivacy = $families['private'];
-		$parentPrivacy = $parents['private'];
-		
-		if (($personPrivacy || $familyPrivacy || $parentPrivacy) && !$allowAdmin) {
-			$firstname = 'Private:';
-			$lastname = ' Details withheld';
-			$result['birthdate'] = "?";
-		}
-	}
+		$personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
 
+	
+	
 	?>
 	<tr>
 		<td class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
-			<a href="/family/?personId=<?php echo $result['personID']?>&amp;tree=<?php echo $tree; ?> "><?php echo $firstname . ' ' . $lastname; ?></a>
+			<a href="<?php echo $personUrl; ?>">
+                    <?php echo $firstname . " "; ?><?php echo $lastname; ?></a>
 		</td>
 		<td  class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-			<?php echo $result['birthdate']; ?>
+			<?php echo $birthdate; ?>
 		</td>
 		
 	<?php 
@@ -79,6 +75,7 @@ var_dump($context);
 			<td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><?php echo $result['gedcom']; ?></td>
         </tr>
     <?php
+	}
 	}
 
 	endforeach; ?> 
