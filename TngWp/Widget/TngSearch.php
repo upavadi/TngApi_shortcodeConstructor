@@ -4,7 +4,8 @@ Adds a sidebar widget to let users search TNG Database for names
 ****************************************************************/
 class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
 {
-
+   
+    
     public function init()
     {
 
@@ -39,7 +40,6 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
         $requireLogin = $p_content->requireLogin(); //in setup
         $userLoggedIn = (is_user_logged_in()); // change this to tngUser, later
 
-       
        
         if(!$requireLogin || ($requireLogin && $userLoggedIn)) {
             echo $before_widget . $before_title . $title . $after_title;
