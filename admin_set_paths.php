@@ -140,7 +140,7 @@ function shortcode_options_page()
 	</form>
 </div>
 <?php
- var_dump($_POST);
+ //var_dump($_POST);
  if(($tng_name_search))
 /***************** */
 //function insert_tng_search_page($tng_name_search) {
