@@ -13,22 +13,31 @@ class TngWp_Shortcode_TngSearch extends TngWp_Shortcode_AbstractShortcode
         $tng_content = $p_content->tngPrivacy(); //general privacy from PrivacyContent
         $user_content = $p_content->userPrivacy(); //User privacy from PrivacyContent
         
-        //Define variables here and add to $context        
-        $requireLogin = $tng_content['tng_login'];
-        $url = $content->getTngUrl();
+        //Define variables here and add to $context  
         $genealogy = $content->getTngIntegrationPath();
-        $integratedPath = dirname($url). "/". $genealogy;        
+        $url = $content->getTngUrl();
+        $IntegratedPath = dirname($url). "/". $genealogy. "/";    
+        $requireLogin = $tng_content['tng_login'];
+        
+                  
         //Sample array for html file.
-        $this->content->init();
+        
         $firstName = filter_input(INPUT_GET, 'firstName', FILTER_SANITIZE_SPECIAL_CHARS);
         $lastName = filter_input(INPUT_GET, 'lastName', FILTER_SANITIZE_SPECIAL_CHARS); 
+        $user = $content->getTngUser();
+        $tngFolder = $content->getTngIntegrationPath();
+
         $context = array(
             'requireLogin' => $requireLogin,
             'treeAccess' => $treeAccess,
 			'userTree' =>$userTree,
-            'tngAllowLiving' => $tngAllowLiving
+            'user' => $user,
+            'url' => $url,
+            'IntegratedPath' => $IntegratedPath,
+
+            'tngFolder' =>$tngFolder
         );
-        var_dump($context);
+       
         $context['results'] = $this->content->searchPerson($firstName, $lastName);
         
 
