@@ -128,3 +128,27 @@ border: 1px  solid #ffff !important;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
+
+
+/** Random photo ***/
+.random-frame {
+	text-align: center;
+	/** display: inline-block; **/
+  float: left;
+  width: 220px;
+  margin: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+	background-color: #e0fbfc;
+	border: 1px solid silver;
+	border-radius: 10px; /**
+	box-shadow: 2px 4px #888888; **/	
+}
+.random-photo {
+  border: 10;
+border-color: black;
+
+}
+
