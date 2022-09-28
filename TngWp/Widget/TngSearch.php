@@ -11,11 +11,11 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
 
      // Check to see if Wordpress page is specified
 
-    // Check for the required plugin functions.
-        $tng_name_search = esc_attr(get_option('tng-api-tng-name-search')); // this is the page will display resullt
+      $tng_name_search = esc_attr(get_option('tng-api-tng-name-search')); // this is the page will display resullt
         
         if (!function_exists('wp_register_sidebar_widget') || ($tng_name_search == "")) return;
  
+        // Check for the required plugin functions.
          wp_register_sidebar_widget( __CLASS__ . '_widget', 'TNG Search', array($this, 'TngSearch'));
 
     // This registers our optional widget control form. Because of this our widget will have a button that reveals a 300x100 pixel form.
@@ -43,8 +43,8 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
         $p_content = TngWp_PrivacyContent::instance(); 
         $requireLogin = $p_content->requireLogin(); //in setup
         $userLoggedIn = (is_user_logged_in()); // change this to tngUser, later
-
-       
+        //$tngUser = $content->getTngUser();
+        //var_dump($tngUser);
         if(!$requireLogin || ($requireLogin && $userLoggedIn)) {
             echo $before_widget . $before_title . $title . $after_title;
             $url_parts = parse_url(get_bloginfo('url'));
