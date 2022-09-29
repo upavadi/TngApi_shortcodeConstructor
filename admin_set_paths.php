@@ -150,6 +150,5 @@ function shortcode_options_page()
 	$author_id = 1;
 	$title = 'TNG Name Search';
 	if(isset($slug)) echo "Slug is set";
-	insert_page($slug, $post_content, $author_id, $title);
-
+	//insert_page($slug, $post_content, $author_id, $title);
 }
