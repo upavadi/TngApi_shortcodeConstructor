@@ -34,6 +34,7 @@ where (m.defphoto = 1 AND m2.living = 0) OR (alwayson = 1) ORDER BY RAND()";
 
 $result2 = $db->query($sql3);
 $imgrow = $result2->fetch_assoc();
+$showmedia_url = 'showmedia.php?';
 
 
 $tng_img_url = $tng_url. $imgrow['mediakey'];
