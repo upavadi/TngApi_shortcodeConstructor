@@ -1,10 +1,10 @@
 <?php
 /*
- * Plugin Name: 1-TngApiShortcodeConstructor Current
+ * Plugin Name: TngApiShortcodeConstructor
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
- * Version: 1.03 dev (under developement)
+ * Version: 1.04 dev (under developement)
  *         
  * Author: Mahesh Upadhyaya. Based on TngApi V3.3x by Neel and Mahesh Upadhyaya
  * Author URI: http://trial.upavadi.net/
