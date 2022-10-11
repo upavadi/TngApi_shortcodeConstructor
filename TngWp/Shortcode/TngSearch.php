@@ -1,11 +1,12 @@
 <?php
 class TngWp_Shortcode_TngSearch extends TngWp_Shortcode_AbstractShortcode
 {
+    // Shortcode
     const SHORTCODE = 'TngWp_search';
     
     public function show()
     {
-      $this->content->init();
+        $this->content->init();
         $content = array(); // shortcodeContent array
         $p_content = array(); // privacyContent array
         $content = TngWp_ShortcodeContent::instance(); 
@@ -16,8 +17,11 @@ class TngWp_Shortcode_TngSearch extends TngWp_Shortcode_AbstractShortcode
         //Define variables here and add to $context  
         $genealogy = $content->getTngIntegrationPath();
         $url = $content->getTngUrl();
-        $IntegratedPath = dirname($url). "/". $genealogy. "/";    
+        $IntegratedPath = dirname($url). "/". $genealogy. "/";   
         $requireLogin = $tng_content['tng_login'];
+        // $treeAccess = $p_content->treeAccess(); //in setup
+       $userTree = "";
+        if (isset($tngUser)) $userTree = $tngUser['mygedcom']; 
         
                   
         //Sample array for html file.
@@ -29,10 +33,9 @@ class TngWp_Shortcode_TngSearch extends TngWp_Shortcode_AbstractShortcode
 
         $context = array(
             'requireLogin' => $requireLogin,
-            'treeAccess' => $treeAccess,
-			'userTree' =>$userTree,
             'user' => $user,
             'url' => $url,
+            'userTree' => $userTree,
             'IntegratedPath' => $IntegratedPath,
 
             'tngFolder' =>$tngFolder
@@ -40,7 +43,6 @@ class TngWp_Shortcode_TngSearch extends TngWp_Shortcode_AbstractShortcode
        
         $context['results'] = $this->content->searchPerson($firstName, $lastName);
         
-
        //This html file to show your page
        return $this->templates->render('tngSearch.html', $context);
     }

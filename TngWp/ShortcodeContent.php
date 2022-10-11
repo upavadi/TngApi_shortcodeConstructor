@@ -587,16 +587,20 @@ SQL;
 public function getMarriageAnniversaries($month, $tree = null)
 {
     $user = $this->getTngUser();
+    $treeWhere = null;
+   if ($user) {
     $gedcom = $user['gedcom'];
     if (isset( $user['gedcom'])) $gedcom = $user['gedcom'];
     // If we are searching, enter $tree value
     if ($tree) {
         $gedcom = $tree;
     }
-    $treeWhere = null;
+    
     if ($gedcom) {
         $treeWhere = ' AND f.gedcom = "' . $gedcom . '"';
     }
+}
+var_dump($treeWhere);
     $sql = <<<SQL
 SELECT
 h.gedcom,
