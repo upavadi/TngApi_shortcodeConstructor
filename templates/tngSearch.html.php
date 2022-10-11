@@ -12,8 +12,9 @@ $lastName = "";
 $tree ="";
 $content = TngWp_ShortcodeContent::instance(); 
 $privacycontent = TngWp_PrivacyContent::instance()->init();
-$privacy = $privacycontent->doPrivacy($personId);
-$personUrl = $integrationPath;
+//$privacy = $privacycontent->doPrivacy($personId);
+$personUrl = $IntegratedPath;
+
 ?>
 <form style="display: inline-block;" method="get">
 	<label for="search-firstname">First Name: <input type="text" value="<?php echo $firstName; ?>" name="firstName" id="search-firstname"></label>
@@ -31,7 +32,7 @@ if (!count($results)): ?>
 			<td class="tdback col-md-2 col-sm-2 col-xs-2">Name</th>
 			<td class="tdback col-lg-1 col-md-1 col-sm-1 col-xs-1">Birth Date</th>
 			<?php 
-			if ($usertree == '') { ?>
+			if ($userTree == '') { ?>
 			<td class="tdback col-lg-1 col-md-1 col-sm-1 col-xs-1">Tree</th>
 			
 			<?php } ?>			
@@ -41,21 +42,18 @@ if (!count($results)): ?>
 	<?php
 
 	foreach($results as $result): 
-		
+		$personId = $result['personID'];
 		$privacy = $privacycontent->doPrivacy($personId);
 	if (($result['private'] == 0) ){ 
-
-
-		$personId = $result['personID'];
 		$allow_living = $privacycontent->doLiving($personId); 
-		$parentId = $result['famc'];
+		//$parentId = $result['famc'];
 		$tree = $result['gedcom'];
 		$firstname = $allow_living['firstname'];
 		$lastname = $allow_living['lastname'];
 		$birthdate = $allow_living['birthdate'];
-		$families = $content->getFamily($personId, $tree, null);
-		$parents = $content->getFamilyById($parentId, $tree = null);
-		$parents = $content->getFamilyById($parentId, $tree = null); 
+		//$families = $content->getFamily($personId, $tree, null);
+		//$parents = $content->getFamilyById($parentId, $tree = null);
+		//$parents = $content->getFamilyById($parentId, $tree = null); 
 		$personUrl = $IntegratedPath. "getperson.php?personID=". $personId. "&tree=". $userTree;
 
 	
@@ -71,7 +69,7 @@ if (!count($results)): ?>
 		</td>
 		
 	<?php 
-		if ($usertree == '') { ?>
+		if ($userTree == '') { ?>
 			<td class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><?php echo $result['gedcom']; ?></td>
         </tr>
     <?php
