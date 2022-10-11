@@ -816,15 +816,17 @@ public function searchPerson($searchFirstName, $searchLastName)
     }
 
     $user = $this->getTngUser();
-    $gedcom = $user['gedcom'];
-    if ($gedcom) {
-        if (!$where) {
+    if ($user) {
+        $gedcom = $user['gedcom'];
+        if ($gedcom) {
+            if (!$where) {
             $where = ' WHERE ';
         } else {
             $where .= ' AND ';
         }
         $where .= ' gedcom = "' . $gedcom . '"';
-    }
+        }
+}
 
     $sql = <<<SQL
 SELECT *
@@ -837,13 +839,13 @@ SQL;
     $result = $this->query($sql);
 
     while ($row = $result->fetch_assoc()) {
-        $userPrivate = $user['allow_private'];
-        $searchPrivate = $row['private'];
-        if ($searchPrivate > $userPrivate) {
-            //$row['firstname'] = 'Private:';
-            //$row['lastname'] = ' Details withheld';
+    //    if $userPrivate = $user['allow_private'];
+    //     $searchPrivate = $row['private'];
+    //     if ($searchPrivate > $userPrivate) {
+    //         //$row['firstname'] = 'Private:';
+    //         //$row['lastname'] = ' Details withheld';
 
-        }
+    //     }
         $rows[] = $row;
     }
     return $rows;
