@@ -5,12 +5,9 @@ Adds a sidebar widget to let users search TNG Database for names
 class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
 {
    
-    
-    public function init()
+   public function init()
     {
-
-     // Check to see if Wordpress page is specified
-
+     // Widget
       $tng_name_search = esc_attr(get_option('tng-api-tng-name-search')); // this is the page will display resullt
         
         if (!function_exists('wp_register_sidebar_widget') || ($tng_name_search == "")) return;
@@ -81,4 +78,6 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
         $title = htmlspecialchars($options['title'], ENT_QUOTES);
         $results = htmlspecialchars($options['results'], ENT_QUOTES);
     }
+
+    
 }
