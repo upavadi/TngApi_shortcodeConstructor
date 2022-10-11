@@ -89,4 +89,6 @@ if (file_exists($tngPath)) {
 		wp_register_style('register-tngapi_bootstrap', plugins_url('css/bootstrap.css', __FILE__));
 		wp_enqueue_style('register-tngapi_bootstrap');
 	}
+
+	register_activation_hook( __FILE__, 'do_insert_pages' ); 
 }
