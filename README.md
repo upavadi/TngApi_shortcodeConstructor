@@ -40,7 +40,8 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
 
 # Change Log
 - Current version 1.04 dev (under developement - process of developing and testing Search Widget)
-  - Added shortcode, `TngWp_RandomMedia` which is set to display images of deceased, images of headstones, images set to be 'always on' OR documents.  
+  - Added shortcode, `TngWp_RandomMedia` which is set to display images of deceased, images of headstones, images set to be 'always on', OR documents.  
+    - Display of Document is fluid and I am open to suggestions
   - Added shortcode, `TngWp_RandomPhoto` which is set to display images of deceased OR images set to be 'always on'.  
     - Functionality may change depending on comments / suggestions from users
   - Added widget, `TngWp_search` which searches names in TNG database. Now in the process of testing it.
