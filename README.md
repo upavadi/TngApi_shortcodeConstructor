@@ -47,6 +47,7 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
   - Added widget, `TngWp_search` which searches names in TNG database. Now in the process of testing it.
     - The widget requires a Wordpress page to display search results. To create the page, navigate to Settings>TNG Shortcodes and enter a page name (slug). A Wordpress page will be created when changes are saved.
     - Widget will only be activate if a Wordpress page for the widget is created.
+    - Note: I use [a Wordpress Classic Widget Plugin](https://en-gb.wordpress.org/plugins/classic-widgets/) to work in the Widget area. Working with Classic Widgets is much easier than working with Blocks. 
 
   - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
     - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.
