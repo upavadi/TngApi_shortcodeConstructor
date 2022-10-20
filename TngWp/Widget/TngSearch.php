@@ -17,7 +17,7 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
 
     // This registers our optional widget control form. Because of this our widget will have a button that reveals a 300x100 pixel form.
         wp_register_widget_control(__CLASS__ . '_control', 'TNG Search', array($this, 'TngSearchControl'), 300, 100);
-        
+    
     }
 
     // This is the function that outputs the TNG search form.
@@ -39,12 +39,11 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
         $content = TngWp_ShortcodeContent::instance(); 
         $p_content = TngWp_PrivacyContent::instance(); 
         $requireLogin = $p_content->requireLogin(); //in setup
-        $userLoggedIn = (is_user_logged_in()); // change this to tngUser, later
-        //$tngUser = $content->getTngUser();
-        //var_dump($tngUser);
-        if(!$requireLogin || ($requireLogin && $userLoggedIn)) {
+      $tnguser = $this-> widgetUser();
+  
+      if(!$requireLogin || ($requireLogin && $tnguser)) {
             echo $before_widget . $before_title . $title . $after_title;
-            $url_parts = parse_url(get_bloginfo('url'));
+           // $url_parts = parse_url(get_bloginfo('url'));
         ?>
             
         <div>
@@ -78,6 +77,21 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
         $title = htmlspecialchars($options['title'], ENT_QUOTES);
         $results = htmlspecialchars($options['results'], ENT_QUOTES);
     }
-
+/** this replaces gettngUser!!! ******** */
+    function widgetUser() 
+    {
+        $configPath = esc_attr(get_option('tng-api-tng-path')). "/config.php";
+        include $configPath;
+        $userTable = $users_table;
+        $wpUser = wp_get_current_user() ->user_login; 
+        
+        $db = @mysqli_connect($database_host, $database_username, $database_password, $database_name );         
+        $query = "SELECT username FROM {$userTable} WHERE username='$wpUser'";
+        //$result = $conn->query($query);
+        $result = $db->query($query);
+        $row = $result->fetch_assoc();
+        if ($row) $tngname = $row['username'];
+        return $wpUser;
+    }
     
 }
