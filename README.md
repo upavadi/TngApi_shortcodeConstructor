@@ -39,18 +39,21 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- Current version 1.04 dev (under developement - process of developing and testing Search Widget)
+- Current version 1.04 dev (under developement - In process of developing and testing Search Widget, Random photo and Random Media short codes)
   - Added shortcode, `TngWp_RandomMedia` which is set to display images of deceased, images of headstones, images set to be 'always on', OR documents.  
-    - Display of Document is fluid and I am open to suggestions
-  - Added shortcode, `TngWp_RandomPhoto` which is set to display images of deceased OR images set to be 'always on'.  
-    - Functionality may change depending on comments / suggestions from users
+    - This is added susequent to user request and it may be modified to suit user needs.  
+    - Display of Document is fluid and I am open to suggestions.<br/><br/>    
+  - Added shortcode, `TngWp_RandomPhoto` which is set to display images of deceased OR images set to be 'always on'. 
+    - current condition is set to display profile images of deseased and images marked as 'Always On' 
+    - This is added susequent to user request and it may be modified to suit user needs.  
+    - Functionality may change depending on comments / suggestions from users<br/><br/>
   - Added widget, `TngWp_search` which searches names in TNG database. Now in the process of testing it.
     - The widget requires a Wordpress page to display search results. To create the page, navigate to Settings>TNG Shortcodes and enter a page name (slug). A Wordpress page will be created when changes are saved.
     - Widget will only be activate if a Wordpress page for the widget is created.
-    - Note: I use [a Wordpress Classic Widget Plugin](https://en-gb.wordpress.org/plugins/classic-widgets/) to work in the Widget area. Working with Classic Widgets is much easier than working with Blocks. 
+    - Note: I use [a Wordpress Classic Widget Plugin](https://en-gb.wordpress.org/plugins/classic-widgets/) to work in the Widget area. Makes it easier to work with Legacy Widgets.<br/><br/> 
 
   - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
-    - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.
+    - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.<br/><br/>
   - Added new file  __ManniversariesDeceased.php__ in TngWp/Shortcode folder. This file defines the new class (line 8) and the name of the shortcode (line 10).
   - Added new file  __manniversaries-deceased.html.php__ in the templates folder. This is the HTML file which deals with the page display and individual calculations. 
   - File __tng-shortcode-constructor.php__: Updated to register the new shortcode
