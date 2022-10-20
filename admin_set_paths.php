@@ -42,7 +42,11 @@ function shortcode_options_page()
 		update_option('tng-api-tng-photo-folder', $tng_photo_folder);
 		update_option('tng-base-tng-path', $tng_integration_path);
 		update_option('tng-api-tng-photo-upload', $tng_collection_id);
-		update_option('tng-api-tng-name-search', $tng_name_search);
+		if ($tng_name_search) {
+			update_option('tng-api-tng-name-search', $tng_name_search);
+		} else {
+			delete_option('tng-api-tng-name-search');
+		}
 		$success = "Changes Saved";
 	}
 	?>
@@ -144,17 +148,9 @@ function shortcode_options_page()
  	if(($tng_name_search)) {
 		$slug = $tng_name_search; 
 		$post_content = '[TngWp_search]';
-		$author_id = 1;
+		//$author_id = 1;
 		$title = 'TNG Name Search';
-		if(isset($slug)) echo "Slug is set=". $slug;
-		
-		$page = get_page_by_path( $tng_name_search); //var_dump($page);
-		echo $page ->post_name;
-		insert_page($slug, $post_content, $author_id, $title);
-	}
-
-/**************/
-	function insert_page($slug, $post_content, $autor_id, $title) {
+		//$page = get_page_by_path( $tng_name_search);
 		$page_array = array(
 			'post_content'   => $post_content,
 			'post_name'      => $slug,
@@ -164,7 +160,7 @@ function shortcode_options_page()
 			'post_type'      => 'page',
 			'ping_status'    => 'closed',
 			'comment_status' => 'closed'
-		); var_dump($page_array);
+		); 
 			$query = new WP_Query( 'pagename=' . $slug );
 	if ( !$query->have_posts() ) wp_insert_post($page_array );
 	return $query;
