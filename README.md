@@ -99,7 +99,7 @@ The plugin should work with all versions of TNG.
 - Alongside my plugins, [TngApi V3.3.2](https://github.com/upavadi/TngApi/archive/refs/tags/V3.3.2.zip) and [tng-wp-login v3.1.3.beta](https://github.com/upavadi/tng-wp-login/releases/tag/3.1.3.beta) 
 
 
-# Shortcodes In This Release
+# Other Shortcodes
 
 - `TngWp_birthdays` List birthdays for the selected month.
 - `TngWp_danniversaries` List death anniversaries for the selected month.
