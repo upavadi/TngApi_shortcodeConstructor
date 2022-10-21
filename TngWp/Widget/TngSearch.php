@@ -13,10 +13,10 @@ class TngWp_Widget_TngSearch implements TngWp_Widget_WidgetInterface
         if (!function_exists('wp_register_sidebar_widget') || ($tng_name_search == "")) return;
  
         // Check for the required plugin functions.
-         wp_register_sidebar_widget( __CLASS__ . '_widget', 'TNG Search', array($this, 'TngSearch'));
+         wp_register_sidebar_widget( __CLASS__ . '_widget', 'TNG Name Search', array($this, 'TngSearch'));
 
     // This registers our optional widget control form. Because of this our widget will have a button that reveals a 300x100 pixel form.
-        wp_register_widget_control(__CLASS__ . '_control', 'TNG Search', array($this, 'TngSearchControl'), 300, 100);
+        wp_register_widget_control(__CLASS__ . '_control', 'TNG Name Search', array($this, 'TngSearchControl'), 300, 100);
     
     }
 
