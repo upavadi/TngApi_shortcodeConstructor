@@ -2,7 +2,7 @@
 ## TNG SHORTCODE CONSTRUCTOR FOR WORDPRESS
 
 ## Download
-You may download latest version, V 1.02, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/releases/latest)
+You may download latest version, V 1.04, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/releases/latest)
 
 Repository for the TNG Shortcode Constructor is [here](https://github.com/upavadi/TngApi_shortcodeConstructor)
 
@@ -39,28 +39,35 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- Current version 1.04 dev (under developement - In process of developing and testing Search Widget, Random photo and Random Media short codes)
-  - Added shortcode, `TngWp_RandomMedia` which is set to display images of deceased, images of headstones, images set to be 'always on', OR documents.  
-    - This is added susequent to user request and it may be modified to suit user needs.  
+- __Current & Released version is 1.04__
+  - Added Legacy Widget, `TngWp_search` which searches names in TNG database.
+    - The widget requires a Wordpress page to display search results.
+    - Page Name, "TNG Name Search", which is same as Widget name, is defined in /widget/TngSearch.php
+    - The widget obeys credentials setup in TNG admin.
+    - To create the Wordpress page, navigate to Settings>TNG Shortcodes and enter a page name (slug) such as tng-search. __Do not leave blanks__ 
+        - A Wordpress page will be created, with shortcode as content, when changes are saved.
+        - Do not leave space between words such as "tng search"
+        - Avoid using __"search"__ as page name as this may clash with the widget in TngApi.
+    - Widget will only be activate if a Wordpress page for the widget is created and page name is shown in the Plugin Paths.
+    - Note: I use [a Wordpress Classic Widget Plugin](https://en-gb.wordpress.org/plugins/classic-widgets/) to work in the Widget area. Makes it very easy to work with Legacy Widgets.<br/><br/> 
+
+  - Added shortcode, `TngWp_RandomMedia` which is set to display 
+    - Default images of deceased
+    - images set to "AlwaysOn" 
+    - headstones
+    - For Documents, default image, /img/doc01.jpg, is shown, with description and link of the document. 
+    - This is added subsequent to user request and it may be modified to suit user needs.  
     - Display of Document is fluid and I am open to suggestions.<br/><br/>    
+  
   - Added shortcode, `TngWp_RandomPhoto` which is set to display images of deceased OR images set to be 'always on'. 
-    - current condition is set to display profile images of deseased and images marked as 'Always On' 
+    - current condition is set to display default images of deseased OR images marked as 'Always On' 
     - This is added susequent to user request and it may be modified to suit user needs.  
-    - Functionality may change depending on comments / suggestions from users<br/><br/>
-  - Added widget, `TngWp_search` which searches names in TNG database. Now in the process of testing it.
-    - The widget requires a Wordpress page to display search results. To create the page, navigate to Settings>TNG Shortcodes and enter a page name (slug). A Wordpress page will be created when changes are saved.
-    - Widget will only be activate if a Wordpress page for the widget is created.
-    - Note: I use [a Wordpress Classic Widget Plugin](https://en-gb.wordpress.org/plugins/classic-widgets/) to work in the Widget area. Makes it easier to work with Legacy Widgets.<br/><br/> 
+    - Functionality may change depending on comments / suggestions from users<br/><br/>    
 
   - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
     - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.<br/><br/>
-  - Added new file  __ManniversariesDeceased.php__ in TngWp/Shortcode folder. This file defines the new class (line 8) and the name of the shortcode (line 10).
-  - Added new file  __manniversaries-deceased.html.php__ in the templates folder. This is the HTML file which deals with the page display and individual calculations. 
-  - File __tng-shortcode-constructor.php__: Updated to register the new shortcode
-  class.
-  - File __ShortcodeContent.php__: modified the SQL to include ‘deathdates’ in the result.
 
-- 1.02 Released version
+- 1.02
   - Special characters (eg Norwegian Æ, Ø, Å ) from TNG database showing up as ? or similar. A charset to UTF applied to all TNG tables in 'shortcodeContent.php' 
 - 1.01
   -Incorrect file name /TngWp/shortcodes/gone.php. Changed to /TngWp/shortcodes/Gone.php.
