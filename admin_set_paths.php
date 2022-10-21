@@ -144,7 +144,7 @@ function shortcode_options_page()
 	</form>
 </div>
 <?php
- //Add Search Page if set
+ //Add Search Page if required
  	if(($tng_name_search)) {
 		$slug = $tng_name_search; 
 		$post_content = '[TngWp_search]';
