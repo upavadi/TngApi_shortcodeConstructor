@@ -4,7 +4,7 @@
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
- * Version: 1.04
+ * Version: 1.04a
  *         
  * Author: Mahesh Upadhyaya. Based on TngApi V3.3x by Neel and Mahesh Upadhyaya
  * Author URI: http://trial.upavadi.net/
@@ -81,7 +81,7 @@ if (file_exists($tngPath)) {
 	add_action('widgets_init', array($tngSearch, 'init'));
 	function add_TngWp_stylesheets()
 	{
-		wp_register_style('register-tngapi_TngWp', plugins_url('css/TngWp.css', __FILE__));
+		wp_register_style('register-tngapi_TngWp', plugins_url('css/tngwp.css', __FILE__));
 		wp_enqueue_style('register-tngapi_TngWp');
 		wp_register_style('register-tngapi_bootstrap', plugins_url('css/bootstrap.css', __FILE__));
 		wp_enqueue_style('register-tngapi_bootstrap');
