@@ -39,8 +39,13 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- __Current Version 1.04a__
-- __Current & Released version is 1.04__
+- __Current Released Version 1.04a__
+  - Corrected stupid typo in tng-shortcode-constructor.php which prevented style sheet, tngwp.css, to load
+  - Style Sheet Bootstrap.css seems to cause conflicts in some themes.  
+    - Modified admin_set_paths.php to add an option to disable bootstrap.css in Settings>TNG Shortcodes.
+    - Modified option to load bootstrap.css in tng-shortcode-constructor.php
+
+- __1.04__
   - Added Legacy Widget, `TngWp_search` which searches names in TNG database.
     - The widget requires a Wordpress page to display search results.
     - Page Name, "TNG Name Search", which is same as Widget name, is defined in /widget/TngSearch.php
@@ -68,9 +73,9 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
   - Added shortcode `TngWp_manniversariesDeceased` which Calculates years between marriage and first death.
     - This shortcode adds extra column to `TngWp_manniversaries`, with header title “Years - First Death”. This displays years between marriage date and first death. Feel free to suggest changes in header titles. For test purposes, this column will display “Living” if both spouses are living.<br/><br/>
 
-- 1.02
+- __1.02__
   - Special characters (eg Norwegian Æ, Ø, Å ) from TNG database showing up as ? or similar. A charset to UTF applied to all TNG tables in 'shortcodeContent.php' 
-- 1.01
+- __1.01__
   -Incorrect file name /TngWp/shortcodes/gone.php. Changed to /TngWp/shortcodes/Gone.php.
   - Omitted to add /templates in gone.html.php. Fixed
   - Undeclared variable when using PHP 8.01 in /templates in gone.html.php Fixed
