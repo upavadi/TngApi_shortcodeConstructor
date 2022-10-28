@@ -14,34 +14,35 @@ function short_code_submenu() {
         'shortcode_options_page' );
 }
 
-
 /***  sub menu page ****/
 function shortcode_options_page()
 {
-	static $author_id;
-
 	$tng_root_path = esc_attr(get_option('tng-api-tng-path'));
 	$tng_url = esc_attr(get_option('tng-api-tng-url'));
 	$tng_photo_folder = esc_attr(get_option('tng-api-tng-photo-folder'));
 	$tng_integration_path = esc_attr(get_option('tng-base-tng-path'));
 	$tng_collection_id = esc_attr(get_option('tng-api-tng-photo-upload'));
 	$tng_name_search = esc_attr(get_option('tng-api-tng-name-search'));
+	$tng_bootstrap_disable = esc_attr(get_option('tng-bootstrap-disable'));
 	$success = "";
 
 	if (isset(($_POST['tng_root_path']))) {
-		//var_dump($_POST);
 		$tng_root_path = $_POST['tng_root_path'];
 		$tng_url = $_POST['tng_url'];
 		$tng_photo_folder = $_POST['tng_photo_folder'];
 		$tng_integration_path = $_POST['tng_integration_path'];
 		$tng_collection_id = $_POST['tng_collection_id'];
 		$tng_name_search = $_POST['tng_name_search'];
+		$tng_bootstrap_disable = null;
+		if ($_POST['disabled'] == 'on')
+		$tng_bootstrap_disable = 1;
 	
 		update_option('tng-api-tng-path', $tng_root_path);
 		update_option('tng-api-tng-url', $tng_url);
 		update_option('tng-api-tng-photo-folder', $tng_photo_folder);
 		update_option('tng-base-tng-path', $tng_integration_path);
 		update_option('tng-api-tng-photo-upload', $tng_collection_id);
+		update_option('tng-bootstrap-disable', $tng_bootstrap_disable);
 		if ($tng_name_search) {
 			update_option('tng-api-tng-name-search', $tng_name_search);
 		} else {
@@ -133,7 +134,21 @@ function shortcode_options_page()
 				Enter name (slug) for Wordpress page. Avoid using 'search' if you are using, or have used TngApi plugin.
 				</td>
 			</tr>
-
+		<!--************************** *-->
+			<tr>
+				<td> <b>Bootstrap CSS</b></td>
+			</tr>
+			<tr>
+				<td>
+				Disable Bootstrap Style: 	
+				</td>
+				<td>
+				<input type="checkbox" name="disabled" <?php if ($tng_bootstrap_disable) echo "checked='checked'"; ?>'>	
+				</td>
+				<td>
+				If you find the styles of your pages are messed up, disable bootstrap CSS.
+				</td>
+			</tr>
 		</table>
 	</div>
 	<p style="color: green; display: inline-block"><?php echo "<b>". $success. "</b><br />"; ?></p>
