@@ -39,6 +39,7 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
+- __Current Version 1.04a__
 - __Current & Released version is 1.04__
   - Added Legacy Widget, `TngWp_search` which searches names in TNG database.
     - The widget requires a Wordpress page to display search results.
