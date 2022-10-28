@@ -83,7 +83,11 @@ if (file_exists($tngPath)) {
 	{
 		wp_register_style('register-tngapi_TngWp', plugins_url('css/tngwp.css', __FILE__));
 		wp_enqueue_style('register-tngapi_TngWp');
+		$tng_bootstrap_disable = esc_attr(get_option('tng-bootstrap-disable'));
+		//activate bootstrap if not disabled
+		if ($tng_bootstrap_disable == null) {
 		wp_register_style('register-tngapi_bootstrap', plugins_url('css/bootstrap.css', __FILE__));
 		wp_enqueue_style('register-tngapi_bootstrap');
+		}
 	}	 
 }
