@@ -773,7 +773,7 @@ public function getYesterdayTodayTomorrow()
     deathdatetr,
     FLOOR(DATEDIFF(CURDATE(), birthdatetr)/365.25) AS BirthAge,
     FLOOR(DATEDIFF(deathdatetr, birthdatetr)/365.25) AS DeathAge,
-    FLOOR(DATEDIFF(deathdatetr, birthdatetr)/365.25) AS DeathYears
+    FLOOR(DATEDIFF(CURDATE(), deathdatetr)/365.25) AS DeathYears
     FROM   {$tables['people_table']}
 
 WHERE
