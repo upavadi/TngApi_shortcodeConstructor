@@ -4,7 +4,7 @@
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
- * Version: 1.04a
+ * Version: 1.04b
  *         
  * Author: Mahesh Upadhyaya. Based on TngApi V3.3x by Neel and Mahesh Upadhyaya
  * Author URI: http://trial.upavadi.net/
