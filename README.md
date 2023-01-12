@@ -39,9 +39,9 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- __Version 1.04b under development__
+- __Current Released Version 1.04b__
   - __Gone but Not Forgotten:__ There was an error in calculating 'Years since Death'. Fixed.
-- __Current Released Version 1.04a__
+- __1.04a__
   - Corrected stupid typo in tng-shortcode-constructor.php which prevented style sheet, tngwp.css, to load
   - Style Sheet Bootstrap.css seems to cause conflicts in some themes.  
     - Modified admin_set_paths.php to add an option to disable bootstrap.css in Settings>TNG Shortcodes.
