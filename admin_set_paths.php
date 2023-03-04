@@ -15,15 +15,34 @@ function short_code_submenu() {
 }
 
 /***  sub menu page ****/
+function eventList() {
+	$tng_path = esc_attr(get_option('tng-api-tng-path').'/config.php');	
+	include($tng_path);
+
+$db = @mysqli_connect($database_host, $database_username, $database_password, $database_name );
+
+$sql = "SELECT * from $eventtypes_table ORDER BY display";
+$result= $db->query($sql);
+//$row = $result->fetch_assoc();
+
+//$rows = array();
+while ($row = $result->fetch_assoc()) {
+	$eventrows[] = $row;
+}
+return $eventrows;
+}
 function shortcode_options_page()
 {
+	
 	$tng_root_path = esc_attr(get_option('tng-api-tng-path'));
 	$tng_url = esc_attr(get_option('tng-api-tng-url'));
 	$tng_photo_folder = esc_attr(get_option('tng-api-tng-photo-folder'));
 	$tng_integration_path = esc_attr(get_option('tng-base-tng-path'));
 	$tng_collection_id = esc_attr(get_option('tng-api-tng-photo-upload'));
 	$tng_name_search = esc_attr(get_option('tng-api-tng-name-search'));
+	$tng_display_buttons = esc_attr(get_option('tng-api-display-buttons'));
 	$tng_bootstrap_disable = esc_attr(get_option('tng-bootstrap-disable'));
+	$tng_api_tng_event = esc_attr(get_option('tng-api-tng-event'));
 	$success = "";
 
 	if (isset(($_POST['tng_root_path']))) {
@@ -33,16 +52,23 @@ function shortcode_options_page()
 		$tng_integration_path = $_POST['tng_integration_path'];
 		$tng_collection_id = $_POST['tng_collection_id'];
 		$tng_name_search = $_POST['tng_name_search'];
-		$tng_bootstrap_disable = null;
-		if ($_POST['disabled'] == 'on')
+		$tng_api_tng_event = $_POST["tng_api_tng_event"];
+		$tng_bootstrap_disable = 0;
+		$tng_display_buttons = 0;
+		if (isset($_POST) && ($_POST['enabled'] == 'on'))
+		$tng_display_buttons = 1;
+		if (isset($_POST) && ($_POST['disabled'] == 'on'))
 		$tng_bootstrap_disable = 1;
-	
+
 		update_option('tng-api-tng-path', $tng_root_path);
 		update_option('tng-api-tng-url', $tng_url);
 		update_option('tng-api-tng-photo-folder', $tng_photo_folder);
 		update_option('tng-base-tng-path', $tng_integration_path);
 		update_option('tng-api-tng-photo-upload', $tng_collection_id);
+		update_option('tng-api-tng-event', $tng_api_tng_event);
+		update_option('tng-api-display-buttons', $tng_display_buttons);
 		update_option('tng-bootstrap-disable', $tng_bootstrap_disable);
+
 		if ($tng_name_search) {
 			update_option('tng-api-tng-name-search', $tng_name_search);
 		} else {
@@ -136,6 +162,55 @@ function shortcode_options_page()
 			</tr>
 		<!--************************** *-->
 			<tr>
+				<td> <b>Family Page</b></td>
+				<td>Track a customized Event</td>
+			</tr>
+			<tr>
+				<td>
+				TNG Event to Track: 	
+				</td>
+				<td>
+				<select name="tng_api_tng_event" style="width:90%">
+				
+        <option value="">Do not Track</option>';
+<?php
+$tngEvent = esc_attr(get_option('tng-api-tng-event'));
+
+$events = eventList();	
+
+foreach ($events as $event) {
+	$eventId = $event['eventtypeID'];
+	$selected = null;
+	if ($eventId == $tngEvent) {
+
+		$selected = "selected='selected'";
+	}
+	echo "<option value='$eventId' $selected>{$event['display']}</option>";
+	}	
+?>
+</select>
+				</td>
+				<td>
+				Turn off this option by selecting Do not Track. If there are multiple entries for this event, only first one will be displayed. 
+				</td>
+
+			</tr>
+			<tr>
+				<td> <b>Display Buttons</b></td>
+			</tr>
+			<tr>
+				<td>
+				Enable: 	
+				</td>
+				<td>
+				<input type="checkbox" name="enabled" <?php if ($tng_display_buttons) echo "checked='checked'"; ?>'>	
+				</td>
+				<td>
+				Three buttons, Genealogy, Ancestors and Descendents are links to TNG pages for the person displayed on Family Page.
+				</td>
+
+			</tr>
+			<tr>
 				<td> <b>Bootstrap CSS</b></td>
 			</tr>
 			<tr>
@@ -148,7 +223,9 @@ function shortcode_options_page()
 				<td>
 				If you find the styles of your pages are messed up, disable bootstrap CSS.
 				</td>
+
 			</tr>
+
 		</table>
 	</div>
 	<p style="color: green; display: inline-block"><?php echo "<b>". $success. "</b><br />"; ?></p>
@@ -159,7 +236,7 @@ function shortcode_options_page()
 	</form>
 </div>
 <?php
- //Add Search Page if required
+//Add Search Page if required
  	if(($tng_name_search)) {
 		$slug = $tng_name_search; 
 		$post_content = '[TngWp_search]';

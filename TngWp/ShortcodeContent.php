@@ -136,6 +136,8 @@ class TngWp_ShortcodeContent
         return $this->tables;
     }
 
+    
+
     /*** Initialize *****/
     public function init()
     {
@@ -194,6 +196,7 @@ class TngWp_ShortcodeContent
         }
         return $rootPath;
     }
+    
 
     /**TNG URL ****/
     public function getTngUrl()
@@ -202,6 +205,12 @@ class TngWp_ShortcodeContent
         include $configPath;
         return $tngdomain;
     }
+
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
 
     /**TNG WP Integration Path ****/
     public function getTngIntegrationPath()
@@ -406,6 +415,16 @@ SQL;
 		return $rows;
     }
 
+    public function sortRows($a, $b)
+    {
+        if ($a[$this->sortBy] > $b[$this->sortBy]) {
+            return 1;
+        }
+        if ($a[$this->sortBy] < $b[$this->sortBy]) {
+            return -1;
+        }
+        return 0;
+    }
     
     public function getPerson($personId = null, $tree = null)
     {
@@ -487,6 +506,68 @@ SQL;
         $row = $result->fetch_assoc();
         return $row;
     }
+    public function getChildren($familyId = null, $tree = nullS)
+    {
+
+        if (!$familyId) {
+            return array();
+        }
+        $user = $this->getTngUser();
+        $gedcom = $user['gedcom'];
+        // If we are searching, enter $tree value
+        if ($tree) {
+            $gedcom = $tree;
+        }
+        $treeWhere = null;
+        if ($gedcom) {
+            $treeWhere = ' AND gedcom = "' . $gedcom . '"';
+        }
+        $sql = <<<SQL
+	SELECT *
+FROM {$this->tables['children_table']}
+WHERE familyID = '{$familyId}' {$treeWhere}
+ORDER BY ordernum
+SQL;
+        $result = $this->query($sql);
+
+        $rows = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    public function getChildrow($personId = null, $tree = null)
+    {
+        $user = $this->getTngUser();
+        $gedcom = $user['gedcom'];
+        // If we are searching, enter $tree value
+        if ($tree) {
+            $gedcom = $tree;
+        }
+        $treeWhere = null;
+        if ($gedcom) {
+            $treeWhere = ' AND gedcom = "' . $gedcom . '"';
+        }
+        $sql = <<<SQL
+	SELECT *
+FROM {$this->tables['children_table']}
+WHERE personID = '{$personId}' {$treeWhere}
+ORDER BY ordernum
+SQL;
+        $result = $this->query($sql);
+
+        $rows = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
 
 /**** *********************Media ************************* */
 public function getDefaultMedia($personId = null, $tree = null)
@@ -512,6 +593,53 @@ SQL;
         $result = $this->query($sql);
         $row = $result->fetch_assoc();
         return $row;
+    }
+
+    public function getAllPersonMedia($personId = null, $tree = null)
+    {
+
+        if (!$personId) {
+            $personId = $this->currentPerson;
+        }
+        $user = $this->getTngUser();
+        $userPrivate = $user['allow_private'];
+        $gedcom = $user['gedcom'];
+        // If we are searching, enter $tree value
+        if ($tree) {
+            $gedcom = $tree;
+        }
+        $persFam = $this->getPerson($personId, $gedcom);
+        if (!$persFam) {
+            $persFam = $this->getFamilyById($personId, $gedcom);
+
+        }
+        $persFamPrivate = $persFam['private'];
+        if ($persFamPrivate > $userPrivate) {
+            return array();
+        }
+        $treeWhere = null;
+        if ($gedcom) {
+            $treeWhere = ' AND m.gedcom = "' . $gedcom . '"';
+        }
+
+        $sql = <<<SQL
+SELECT *
+FROM   {$this->tables['media_table']} as ml
+    LEFT JOIN {$this->tables['medialinks_table']} AS m
+              ON ml.mediaID = m.mediaID
+where personID = '{$personId}' AND m.defphoto <> "1" {$treeWhere}
+
+ORDER  BY m.ordernum
+
+SQL;
+        $result = $this->query($sql);
+
+        $rows = array();
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 
     public function getProfileMedia($personId = null, $tree = null)
@@ -773,7 +901,7 @@ public function getYesterdayTodayTomorrow()
     deathdatetr,
     FLOOR(DATEDIFF(CURDATE(), birthdatetr)/365.25) AS BirthAge,
     FLOOR(DATEDIFF(deathdatetr, birthdatetr)/365.25) AS DeathAge,
-    FLOOR(DATEDIFF(deathdatetr, birthdatetr)/365.25) AS DeathYears
+    FLOOR(DATEDIFF(CURDATE(), deathdatetr)/365.25) AS DeathYears
     FROM   {$tables['people_table']}
 
 WHERE
@@ -855,10 +983,150 @@ SQL;
     return $rows;
 }
 
+function getEventList()
+{
+    if (!isset($this->tables['eventtypes_table'])) {
+        return array();
+    }
+
+    $sql = <<<SQL
+
+SELECT *
+FROM {$this->tables['eventtypes_table']}
+ORDER BY display
+
+SQL;
+    $result = $this->query($sql);
+
+    $rows = array();
+    while ($row = $result->fetch_assoc()) {
+        $eventrows[] = $row;
+    }
+
+    return $eventrows;
+}
 
 
+/* Special event type is called here */
 
-/***
+public function getSpEvent($personId = null, $tree = null)
+{
+
+    if (!$personId) {
+        $personId = $this->currentPerson;
+    }
+    $EventID = esc_attr(get_option('tng-api-tng-event'));
+    $user = $this->getTngUser();
+    $gedcom = $user['gedcom'];
+    // If we are searching, enter $tree value
+    if ($tree) {
+        $gedcom = $tree;
+    }
+    $treeWhere = null;
+    if ($gedcom) {
+        $treeWhere = ' AND gedcom = "' . $gedcom . '"';
+    }
+    $sql = <<<SQL
+
+SELECT *
+FROM {$this->tables['events_table']}
+where persfamID = '{$personId}' AND eventtypeID = '$EventID' {$treeWhere}
+SQL;
+    $result = $this->query($sql);
+    $row = $result->fetch_assoc();
+
+    return $row;
+}
+
+/* Display for Special event tng-event display is called here */
+
+public function getEventDisplay()
+{
+    $EventID = esc_attr(get_option('tng-api-tng-event'));
+    $sql = <<<SQL
+
+SELECT *
+FROM {$this->tables['eventtypes_table']}
+where eventtypeID = "$EventID"
+SQL;
+    $result = $this->query($sql);
+    $row = $result->fetch_assoc();
+
+    return $row;
+}
+
+
+// Special event type 0 for Cause of Death
+public function getCause($personId = null, $tree = null)
+{
+
+    if (!$personId) {
+        $personId = $this->currentPerson;
+    }
+    $user = $this->getTngUser();
+    $gedcom = $user['gedcom'];
+    // If we are searching, enter $tree value
+    if ($tree) {
+        $gedcom = $tree;
+    }
+    $treeWhere = null;
+    if ($gedcom) {
+        $treeWhere = ' AND gedcom = "' . $gedcom . '"';
+    }
+    $sql = <<<SQL
+
+SELECT *
+FROM {$this->tables['events_table']}
+where persfamID = '{$personId}' AND eventtypeID = "o" AND parenttag = "DEAT" {$treeWhere}
+SQL;
+    $result = $this->query($sql);
+    $row = $result->fetch_assoc();
+
+    return $row;
+}
+
+public function getNotes($personId = null, $tree = null)
+{
+    if (!$personId) {
+        $personId = $this->currentPerson;
+    }
+    $user = $this->getTngUser();
+    $userPrivate = $user['allow_private'];
+
+    $gedcom = $user['gedcom'];
+    // If we are searching, enter $tree value
+    if ($tree) {
+        $gedcom = $tree;
+    }
+    $treeWhere = null;
+    if ($gedcom) {
+        $treeWhere = ' AND n1.gedcom = "' . $gedcom . '"';
+    }
+    $person = $this->getPerson($personId, $gedcom);
+    $personPrivate = $person['private'];
+
+    $sql = <<<SQL
+SELECT nl.ID as notelinkID, nl.*, xl.*
+FROM   {$this->tables['notelinks_table']} as nl
+LEFT JOIN {$this->tables['xnotes_table']} AS xl
+ON nl.xnoteID = xl.ID
+where persfamID = '{$personId}'
+SQL;
+    $result = $this->query($sql);
+
+    $rows = array();
+    if ($personPrivate > $userPrivate) {
+        return $rows;
+    }
+    while ($row = $result->fetch_assoc()) {
+        if ($row['secret']) {
+            continue;
+        }
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
 public function guessVersion()
 {
     $sql = 'describe ' . $this->tables['people_table'];
@@ -904,5 +1172,5 @@ public function guessVersion()
 
     return $version;
 }
-**/ 
+
 } //End class
