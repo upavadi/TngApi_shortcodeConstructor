@@ -2,9 +2,9 @@
 ## TNG SHORTCODE CONSTRUCTOR FOR WORDPRESS
 
 ## Download
-You may download latest version, V 1.04, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/releases/latest)
+You may download latest version, V1.04, [here.](https://github.com/upavadi/TngApi_shortcodeConstructor/releases/latest)
 
-Repository for the TNG Shortcode Constructor is [here](https://github.com/upavadi/TngApi_shortcodeConstructor)
+Repository for the Current Development, Version V1.05, is [here](https://github.com/upavadi/TngApi_shortcodeConstructor)
 
 
 ## License
@@ -39,6 +39,24 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
+- __Current Development Version 1.05__
+ - Added __shortcode `TngWp_familyuser`__. A reconstructed family page from my TngApi plugin. 
+   - As the default person for this page is the logged-in User, the page is only available to logged-in users.  
+    I am open to suggestions if this has to be changed.
+   - Displays All family data including notes and media 
+   - Option to upload Profile Image
+   - Option (in Settings) to display Button Links to TNG Person, Ancestors and Descendents.
+    - Option (in Settings) to track ONE Special Event. Please note that if there are more than on entry for that person, only first one will be displayed.
+  - Added files,
+    - /TngWp/Shortcode/FamilyUser
+    - /templates/Familyuser.html
+    - /templates/processupload
+ - Modified files,
+  - tng-shortcode-constructor
+  - /TngWp/ShortcodeContent
+  - /css/tngwp
+  - this file, readme
+
 - __Current Released Version 1.04a__
   - Corrected stupid typo in tng-shortcode-constructor.php which prevented style sheet, tngwp.css, to load
   - Style Sheet Bootstrap.css seems to cause conflicts in some themes.  
