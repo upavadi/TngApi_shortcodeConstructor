@@ -4,7 +4,7 @@
  * Description: Shortcode constructor for TNG V10 to V13
  *
  * Plugin URI: https://github.com/TngWp/TngApi
- * Version: 1.04a
+ * Version: 1.05
  *         
  * Author: Mahesh Upadhyaya. Based on TngApi V3.3x by Neel and Mahesh Upadhyaya
  * Author URI: http://trial.upavadi.net/
@@ -71,6 +71,7 @@ if (file_exists($tngPath)) {
 	$content->addShortcode(new TngWp_Shortcode_RandomPhotoShortcode());
 	$content->addShortcode(new TngWp_Shortcode_RandomMediaShortcode());
 	$content->addShortcode(new TngWp_Shortcode_LandingPage());
+	$content->addShortcode(new TngWp_Shortcode_FamilyUser());
 	$content->addShortcode(new TngWp_Shortcode_Gone());
 	$content->addShortcode(new TngWp_Shortcode_TngSearch());
 	$tngSearch = new TngWp_Widget_TngSearch;
@@ -85,7 +86,7 @@ if (file_exists($tngPath)) {
 		wp_enqueue_style('register-tngapi_TngWp');
 		$tng_bootstrap_disable = esc_attr(get_option('tng-bootstrap-disable'));
 		//activate bootstrap if not disabled
-		if ($tng_bootstrap_disable == null) {
+		if ($tng_bootstrap_disable == 0) {
 		wp_register_style('register-tngapi_bootstrap', plugins_url('css/bootstrap.css', __FILE__));
 		wp_enqueue_style('register-tngapi_bootstrap');
 		}
