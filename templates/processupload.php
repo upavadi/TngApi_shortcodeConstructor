@@ -1,5 +1,5 @@
 <?php
-
+/*** Upload image */
 require_once '../../../../wp-load.php';
 require_once '../autoload.php';
 $end_msg = " Thanks for submitting. Once the Image is processed, it will be available in the Family Tree. I will let you know by email, once I have done this.";
