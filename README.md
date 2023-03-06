@@ -39,7 +39,7 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- __Current Development Version 1.05__
+- __Current REleased Version V1.05__
  - Added __shortcode `TngWp_familyuser`__. A reconstructed family page from my TngApi plugin. 
    - As the default person for this page is the logged-in User, the page is only available to logged-in users.  
     I am open to suggestions if this has to be changed.
