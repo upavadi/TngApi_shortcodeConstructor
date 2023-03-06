@@ -57,7 +57,7 @@ function shortcode_options_page()
 		$tng_display_buttons = 0;
 		if (isset($_POST) && ($_POST['enabled'] == 'on'))
 		$tng_display_buttons = 1;
-		if (isset($_POST) && ($_POST['disabled'] == 'on'))
+		if (isset($_POST['disabled']) && ($_POST['disabled'] == 'on'))
 		$tng_bootstrap_disable = 1;
 
 		update_option('tng-api-tng-path', $tng_root_path);
