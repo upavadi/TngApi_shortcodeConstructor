@@ -52,12 +52,12 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
     - /templates/Familyuser.html
     - /templates/processupload
  - Modified files,
-  - tng-shortcode-constructor
-  - /TngWp/ShortcodeContent
-  - /css/tngwp
-  - this file, readme
+   - tng-shortcode-constructor
+   - /TngWp/ShortcodeContent
+   - /css/tngwp
+   - this file, readme
 
-- __Current Released Version 1.04a__
+- __1.04a__
   - Corrected stupid typo in tng-shortcode-constructor.php which prevented style sheet, tngwp.css, to load
   - Style Sheet Bootstrap.css seems to cause conflicts in some themes.  
     - Modified admin_set_paths.php to add an option to disable bootstrap.css in Settings>TNG Shortcodes.
