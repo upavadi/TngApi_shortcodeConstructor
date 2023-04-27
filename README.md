@@ -39,7 +39,13 @@ Plan is to have the __TNG Shortcode Constructor__ do everything the TngApi did, 
       - Restrict User access to specific trees and branches.
 
 # Change Log
-- __Current Released Version V1.05__
+- __Current Version V1.05A__
+  - Security Update
+    - Jquery version jquery-1.10.2.min.js replaced with jquery-3.5.0.min.js in /js folder
+    - Coy of current 3.5.0 version is jquery-current.min.js in /js folder
+  - Modified familyuser.html.php and submit_images.html.htp to use jquery-current.min.js.
+
+- __Current Released Version 1.05__
  - Added __shortcode `TngWp_familyuser`__. A reconstructed family page from my TngApi plugin. 
    - As the default person for this page is the logged-in User, the page is only available to logged-in users.  
     I am open to suggestions if this has to be changed.
