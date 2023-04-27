@@ -31,11 +31,10 @@ $disabled = "disabled";
     <title>Upload photos</title>
     <!--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">  -->
-	<script type="text/javascript" src="<?php echo plugins_url('js/jquery-1.10.2.min.js', dirname(__FILE__)); ?>"></script>
-	<script type="text/javascript" src="<?php echo plugins_url('js/jquery.form.min.js', dirname(__FILE__)); ?>"></script>
-
-	<?php 
-	?>
+    <script type="text/javascript" src="<?php echo plugins_url('js/jquery-current.min.js', dirname(__FILE__)); ?>"></script>
+	  <!--<script type="text/javascript" src="<?php echo plugins_url('js/jquery-1.10.2.min.js', dirname(__FILE__)); ?>"></script>
+    Replaced with current JS version -->
+    <script type="text/javascript" src="<?php echo plugins_url('js/jquery.form.min.js', dirname(__FILE__)); ?>"></script>
 <head>
 <script type="text/javascript">
 

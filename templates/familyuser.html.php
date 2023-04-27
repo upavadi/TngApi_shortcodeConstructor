@@ -833,12 +833,11 @@ $User = $current_user->user_firstname;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Upload photos</title>
-    
-	<script type="text/javascript" src="<?php echo plugins_url('js/jquery-1.10.2.min.js', dirname(__FILE__)); ?>"></script>
+	
+	<!-- jquery-current.min.js is copy of current jquery jquery-x.x.x.min.js --> 
+    <script type="text/javascript" src="<?php echo plugins_url('js/jquery-current.min.js', dirname(__FILE__)); ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url('js/jquery.form.min.js', dirname(__FILE__)); ?>"></script>
 
-	<?php 	
-	?>
 <head>
 <script type="text/javascript">
 
